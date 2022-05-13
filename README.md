@@ -1,4 +1,5 @@
 ## gitのコマンド
+https://qiita.com/_ha1f/items/2dca1047c57d4f0bd465
 
 - githubとの連携
   - ```git remote add origin リポジトリURL``` (初回)
