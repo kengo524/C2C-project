@@ -35,7 +35,11 @@ class BankAccountSeeder extends Seeder
 
         BankAccount::create([
             'user_id' => $user->id,
-            'name' => "テストだよ。",
+            'name' => "テストさん",
+            'bank_name' => "テスト銀行",
+            'bank_number' => "00000000000",
+            "branch_name" => "テスト支店",
+            'type' => "普通口座",
         ]);
     }
 }
