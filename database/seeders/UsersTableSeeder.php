@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -19,10 +20,9 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'id' => 1,
             'name' => "ss",
             'email' => "ss@email.com",
-            'password' => "ssssssss",
+            'password' => Hash::make("ssssssss"),
             'phone_number' => "000-0000-0000",
             'postal_code' => "000-0000",
             'address' => "東京都恵比寿１丁目１－１",
