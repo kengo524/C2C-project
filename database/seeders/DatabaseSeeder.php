@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call([OrdersTableSeeder::class,]);
         $this->call([OrderDetailsTableSeeder::class,]);
         $this->call([ShippingAddressesTableSeeder::class,]);
-      　$this->call([CartsTableSeeder::class,]);
+        $this->call([CartsTableSeeder::class,]);
 
     }
 }
