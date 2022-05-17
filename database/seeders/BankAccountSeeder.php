@@ -21,20 +21,20 @@ class BankAccountSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-            'name' => "bankAccountTest",
-            'email' => "bank@email.com",
-            'password' => Hash::make("bankTest"),
-            'phone_number' => "000-0000-0000",
-            'postal_code' => "000-0000",
-            'address' => "東京都恵比寿１丁目１－１",
-            'nick_name' => "bankくん",
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        // $user = User::create([
+        //     'name' => "bankAccountTest",
+        //     'email' => "bank@email.com",
+        //     'password' => Hash::make("bankTest"),
+        //     'phone_number' => "000-0000-0000",
+        //     'postal_code' => "000-0000",
+        //     'address' => "東京都恵比寿１丁目１－１",
+        //     'nick_name' => "bankくん",
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ]);
 
         BankAccount::create([
-            'user_id' => $user->id,
+            'user_id' => 1,
             'name' => "テストさん",
             'bank_name' => "テスト銀行",
             'bank_number' => "00000000000",
