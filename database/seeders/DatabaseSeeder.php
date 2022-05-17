@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ItemCategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,8 +21,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
         $this->call([UsersTableSeeder::class,]);
         $this->call([BankAccountSeeder::class,]);
+        $this->call([ItemCategoryTableSeeder::class,]);
+        $this->call([ItemTableSeeder::class,]);
 
     }
 }
