@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ItemCategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             UsersTableSeeder::class,
+            ItemCategoryTableSeeder::class,
+            ItemTableSeeder::class,
           ]);
 
     }
