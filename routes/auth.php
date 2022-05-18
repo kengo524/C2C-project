@@ -15,14 +15,14 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create']);
 
     //ユーザ情報登録
-    Route::post('/usersregister', [RegisteredUserController::class, 'store'])
-                ->name('usersregister');
+    Route::post('/register/users', [RegisteredUserController::class, 'store'])
+                ->name('register/users');
 
-    Route::get('/usersregister', [RegisteredUserController::class, 'userscreate']);
+    Route::get('/register/users', [RegisteredUserController::class, 'userscreate']);
 
     // ユーザ登録情報確認画面
-    Route::post('/confirmregister', [RegisteredUserController::class, 'usersstore'])
-                ->name('confirmregister');
+    Route::post('/register/confirm', [RegisteredUserController::class, 'usersstore'])
+                ->name('register/confirm');
 
     //出品商品一覧画面（トップページ）
     Route::post('/items', [RegisteredUserController::class, 'save'])
