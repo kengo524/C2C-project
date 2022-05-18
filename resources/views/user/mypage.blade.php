@@ -8,5 +8,11 @@
     </head>
     <body>
       <div>ここはマイページ</div>
+      <a href="{{ route('mypage') }}">トップページへ</a>
+      <a href="{{ route('mypage') }}">新規出品</a>
+      <a href="{{ route('listing') }}">購入履歴</a>
+      <a href="{{ route('mypage') }}">出品履歴</a>
+      <a href="{{ route('mypage') }}">出金</a>
+      <a href="{{ route('mypage') }}">ユーザー情報変更</a>
     </body>
 </html>

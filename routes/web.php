@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +28,9 @@ require __DIR__.'/auth.php';
 
 
 //ユーザのルート
-Route::get('/mypage', [UserController::class, 'mypage']);
+Route::get('/mypage', [UserController::class, 'mypage'])->middleware(['auth'])->name('mypage');
+
+
+//購入系のルート
+Route::get('/listing', [OrderController::class, 'index'])->middleware(['auth'])->name('listing');
+
