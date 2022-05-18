@@ -18,13 +18,15 @@ class ShippingAddressesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('shipping_addresses')->insert([
-            'user_id' => 1,
-            'name' => "ss.brother",
-            'postal_code' => 5555555,
-            'address' => "兵庫県神戸市灘区1-1",
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        for ($i = 1; $i < 3; $i++){
+            DB::table('shipping_addresses')->insert([
+                'user_id' => $i,
+                'name' => "ss.brother",
+                'postal_code' => 5555555,
+                'address' => "兵庫県神戸市灘区${i}-${i}",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
     }
 }
