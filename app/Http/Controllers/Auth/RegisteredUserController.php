@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
         // $password = $request->password;
 
         $inputs = $request->all();
-
+        // dd($inputs);
         // $user = User::create([
         //     // 'name' => $request->name,
         //     'email' => $request->email,
@@ -87,6 +87,7 @@ class RegisteredUserController extends Controller
         // $address = $request->address;
 
         $inputs = $request->all();
+        // dd($inputs);
 
         // $user = User::create([
         //     // 'name' => $request->name,
@@ -100,11 +101,12 @@ class RegisteredUserController extends Controller
 
         // return redirect(RouteServiceProvider::HOME);
         //確認画面へ
-        return view('auth.usersregister',[
+        return view('auth.confirmregister',[
             'request' => $inputs,
         ]);
     }
 
+    //ユーザ情報登録確認
     public function confirm(Request $request)
     {
         // // Bladeで使う変数
@@ -122,6 +124,27 @@ class RegisteredUserController extends Controller
 
         return view('auth.confirmregister',[
             'request' => $inputs,
+        ]);
+    }
+
+        //データベースにユーザ情報を保存
+        public function save(Request $request)
+    {
+        // フォルダモデルのインスタンスを作成する
+        $inputs = new User();
+        // 入力値を代入する
+        $inputs->email = $request['email'];
+        $inputs->password = $request['password'];
+        $inputs->name = $request['name'];
+        $inputs->nick_name = $request['nick_name'];
+        $inputs->postal_code = $request['postal_code'];
+        $inputs->address = $request['address'];
+        // インスタンスの状態をデータベースに書き込む
+        $inputs->save();
+        dd($inputs);
+
+        return redirect()->route('tasks.index', [
+            'id' => $inputs->id,
         ]);
     }
 }

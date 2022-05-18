@@ -12,20 +12,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     //メールとパスワードの登録
-    Route::get('register', [RegisteredUserController::class, 'create']);
+    Route::get('/register', [RegisteredUserController::class, 'create']);
 
 
-    Route::post('register', [RegisteredUserController::class, 'store'])
+    Route::post('/register', [RegisteredUserController::class, 'store'])
                 ->name('register');
 
     //ユーザ情報登録
-    Route::get('usersregister', [RegisteredUserController::class, 'userscreate'])
+    Route::get('/usersregister', [RegisteredUserController::class, 'userscreate']);
+
+    Route::post('/usersregister', [RegisteredUserController::class, 'usersstore'])
                 ->name('usersregister');
 
-    Route::post('usersregister', [RegisteredUserController::class, 'usersstore']);
-
     // ユーザ登録情報確認画面
-    Route::post('confirmregister', [RegisteredUserController::class, 'confirm']);
+    Route::post('/confirmregister', [RegisteredUserController::class, 'confirm'])
+                ->name('confirmregister');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');

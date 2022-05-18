@@ -18,6 +18,7 @@
             <input name="postalcode" value="{{ $postal_code }}" />
             <input name="password" value="{{ $password }}" /> --}}
 
+            <!--デフォルトで作成されていたデザインでの確認画面-->
             {{-- <!-- Email Address -->
             <div class="mt-4">
                 <x-label for="email" :value="__('Email')" />
@@ -26,17 +27,10 @@
                 <input type="hidden" class="form-control" name="email" id="email" value="{{ old('$request->email') }}"/>
             </div> --}}
 
-
-            <div class="form-group">
-                <label for="email">email:</label>
-                <p>{{ $request['email'] }}</p>
-                <input type="hidden" class="form-control" name="email" id="email" value="{{ old('$request->email') }}"/>
-            </div>
-
             {{-- <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />
-
+                <p>{{ $request['password'] }}</p>
                 <x-input id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
@@ -70,6 +64,50 @@
 
                 <x-input id="address" class="block mt-1 w-full" type="text" name="address" value="{{ $address }}" />
             </div> --}}
+
+
+            <!-- Email-->
+            <div class="form-group">
+                <label for="email">email</label>
+                <p>{{ $request['email'] }}</p>
+                <input type="hidden" class="form-control" name="email" id="email" value="{{ old('$request->email') }}"/>
+            </div>
+
+            <!-- Password-->
+            <div class="form-group">
+                <label for="password">password</label>
+                {{-- <p>{{ $request['password'] }}</p> --}}
+                <p>●●●●●●●●</p>
+                <input type="hidden" class="form-control" name="password" id="password" value="{{ old('$request->password') }}"/>
+            </div>
+
+            <!-- Name-->
+            <div class="form-group">
+                <label for="name">name</label>
+                <p>{{ $request['name'] }}</p>
+                <input type="hidden" class="form-control" name="name" id="name" value="{{ old('$request->name') }}"/>
+            </div>
+
+            <!-- NickName-->
+            <div class="form-group">
+                <label for="nick_name">nickname</label>
+                <p>{{ $request['nick_name'] }}</p>
+                <input type="hidden" class="form-control" name="nick_name" id="nick_name" value="{{ old('$request->nick_name') }}"/>
+            </div>
+
+            <!-- PostalCode-->
+            <div class="form-group">
+                <label for="postal_code">postalcode</label>
+                <p>{{ $request['postal_code'] }}</p>
+                <input type="hidden" class="form-control" name="postal_code" id="postal_code" value="{{ old('$request->postal_code') }}"/>
+            </div>
+
+            <!-- Address-->
+            <div class="form-group">
+                <label for="address">address</label>
+                <p>{{ $request['address'] }}</p>
+                <input type="hidden" class="form-control" name="address" id="address" value="{{ old('$request->address') }}"/>
+            </div>
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">

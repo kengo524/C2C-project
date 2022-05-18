@@ -9,14 +9,14 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('confirmregister') }}">
+        <form method="POST" action="{{ route('usersregister') }}">
             @csrf
             {{-- <input type="hidden" name="email" value="{{ $email }}" />
             <input type="hidden" name="password" value="{{ $password }}" /> --}}
             {{-- <p>{{ $request['email'] }}</p>
             <p>{{ $request['password'] }}</p> --}}
-            <input type="hidden" class="form-control" name="email" id="email" value="{{ old('$request->email') }}"/>
-            <input type="hidden" class="form-control" name="password" id="password" value="{{ old('$request->password') }}"/>
+            <input type="hidden" class="form-control" name="email" id="email" value="{{ $request['email'] }}"/>
+            <input type="hidden" class="form-control" name="password" id="password" value="{{ $request['password'] }}"/>
 
             <!-- Name -->
             <div>
