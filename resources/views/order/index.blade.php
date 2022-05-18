@@ -4,16 +4,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>order_lists</title>
+        <title>orders</title>
     </head>
     <body>
       <div>ここは購入履歴一覧ページ</div>
-      @foreach($order_lists as $order_list)
-        <p>注文ID:{{$order_list->id}}</p>
-        <p>ユーザID:{{$order_list->user_id}}</p>
-        <p>合計金額:{{$order_list->price}}</p>
+      @foreach($orders as $order)
+      <a href="{{ route('order', ['id'=>$order->id]) }}">
+        <p>注文ID:{{$order->id}}</p>
+        <p>ユーザID:{{$order->user_id}}</p>
+        <p>合計金額:{{$order->price}}</p>
         <p>注文日:</p>
-
+      </a>
+      <a href="{{ route('mypage') }}">マイページへ戻る</a>
       @endforeach
     </body>
 </html>

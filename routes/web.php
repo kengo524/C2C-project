@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
+
 
 
 /*
@@ -32,5 +34,6 @@ Route::get('/mypage', [UserController::class, 'mypage'])->middleware(['auth'])->
 
 
 //購入系のルート
-Route::get('/listing', [OrderController::class, 'index'])->middleware(['auth'])->name('listing');
+Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth'])->name('orders');
+Route::get('/orders/{id}', [OrderController::class, 'show'])->middleware(['auth'])->name('order');
 
