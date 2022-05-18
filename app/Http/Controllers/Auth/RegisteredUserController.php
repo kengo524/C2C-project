@@ -61,9 +61,8 @@ class RegisteredUserController extends Controller
         // Auth::login($user);
 
         // return redirect(RouteServiceProvider::HOME);
-        //ユーザ登録画面へ
-        // return view('auth.usersregister',compact('email', 'password'));
-         //入力内容確認ページのviewに変数を渡して表示
+
+         //ユーザ情報登録画面を表示するviewへ
         return view('auth.usersregister', [
             'request' => $inputs,
         ]);
@@ -77,14 +76,6 @@ class RegisteredUserController extends Controller
         //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
         // ]);
-
-        //保持している値（＝確認画面に送る値）
-        // $email = $request->email;
-        // $password = $request->password;
-        // $name = $request->name;
-        // $nick_name = $request->nick_name;
-        // $postal_code = $request->postal_code;
-        // $address = $request->address;
 
         $inputs = $request->all();
         // dd($inputs);
@@ -100,7 +91,7 @@ class RegisteredUserController extends Controller
         // Auth::login($user);
 
         // return redirect(RouteServiceProvider::HOME);
-        //確認画面へ
+        //確認画面を表示するviewへ
         return view('auth.confirmregister',[
             'request' => $inputs,
         ]);
@@ -131,20 +122,21 @@ class RegisteredUserController extends Controller
         public function save(Request $request)
     {
         // フォルダモデルのインスタンスを作成する
-        $inputs = new User();
+        $user = new User();
         // 入力値を代入する
-        $inputs->email = $request['email'];
-        $inputs->password = $request['password'];
-        $inputs->name = $request['name'];
-        $inputs->nick_name = $request['nick_name'];
-        $inputs->postal_code = $request['postal_code'];
-        $inputs->address = $request['address'];
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->name = $request->name;
+        $user->nick_name = $request->nick_name;
+        $user->phone_number = $request->phone_number;
+        $user->postal_code = $request->postal_code;
+        $user->address = $request->address;
+        // dd($user);
         // インスタンスの状態をデータベースに書き込む
-        $inputs->save();
-        dd($inputs);
+        $user->save();
 
-        return redirect()->route('tasks.index', [
-            'id' => $inputs->id,
+        return redirect()->route('items', [
+            'id' => $user->id,
         ]);
     }
 }

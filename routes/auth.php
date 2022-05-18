@@ -14,19 +14,19 @@ Route::middleware('guest')->group(function () {
     //メールとパスワードの登録
     Route::get('/register', [RegisteredUserController::class, 'create']);
 
-
-    Route::post('/register', [RegisteredUserController::class, 'store'])
-                ->name('register');
-
     //ユーザ情報登録
-    Route::get('/usersregister', [RegisteredUserController::class, 'userscreate']);
-
-    Route::post('/usersregister', [RegisteredUserController::class, 'usersstore'])
+    Route::post('/usersregister', [RegisteredUserController::class, 'store'])
                 ->name('usersregister');
 
+    Route::get('/usersregister', [RegisteredUserController::class, 'userscreate']);
+
     // ユーザ登録情報確認画面
-    Route::post('/confirmregister', [RegisteredUserController::class, 'confirm'])
+    Route::post('/confirmregister', [RegisteredUserController::class, 'usersstore'])
                 ->name('confirmregister');
+
+    //出品商品一覧画面（トップページ）
+    Route::post('/items', [RegisteredUserController::class, 'save'])
+                ->name('items');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');

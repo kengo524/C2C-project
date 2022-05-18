@@ -9,17 +9,10 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('usersregister') }}">
             @csrf
             {{-- <input type="hidden" name="email" value="{{ $email }}" />
             <input type="hidden" name="password" value="{{ $password }}" /> --}}
-
-            {{-- <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div> --}}
 
             <!-- Email Address -->
             <div class="mt-4">
