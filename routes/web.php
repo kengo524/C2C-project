@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ItemController;
 
 
 /*
@@ -18,9 +19,12 @@ use App\Http\Controllers\OrderDetailController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ホーム画面
+Route::get('/', [HomeController::class, 'index'])->name('homepage');
+// 商品
+Route::get('/item', [HomeController::class, 'index'])->name('homepage');
+Route::get('/item/{id}', [ItemController::class, 'itemDetail'])->name('item_detail');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
