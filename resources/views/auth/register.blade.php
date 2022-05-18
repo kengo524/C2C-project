@@ -11,13 +11,15 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+            {{-- <input type="hidden" name="email" value="{{ $email }}" />
+            <input type="hidden" name="password" value="{{ $password }}" /> --}}
 
-            <!-- Name -->
+            {{-- <!-- Name -->
             <div>
                 <x-label for="name" :value="__('Name')" />
 
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
+            </div> --}}
 
             <!-- Email Address -->
             <div class="mt-4">
@@ -51,7 +53,7 @@
                 </a>
 
                 <x-button class="ml-4">
-                    {{ __('Register') }}
+                    {{ __('ユーザ情報登録へ') }}
                 </x-button>
             </div>
         </form>

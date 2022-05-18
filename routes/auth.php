@@ -11,10 +11,21 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+    //メールとパスワードの登録
+    Route::get('register', [RegisteredUserController::class, 'create']);
+
+
+    Route::post('register', [RegisteredUserController::class, 'store'])
                 ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    //ユーザ情報登録
+    Route::get('usersregister', [RegisteredUserController::class, 'userscreate'])
+                ->name('usersregister');
+
+    Route::post('usersregister', [RegisteredUserController::class, 'usersstore']);
+
+    // ユーザ登録情報確認画面
+    Route::post('confirmregister', [RegisteredUserController::class, 'confirm']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');

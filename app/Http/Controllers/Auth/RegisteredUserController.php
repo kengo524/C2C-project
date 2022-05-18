@@ -23,6 +23,11 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
+    public function userscreate()
+    {
+        return view('auth.usersregister');
+    }
+
     /**
      * Handle an incoming registration request.
      *
@@ -31,24 +36,92 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+    //メールとパスワードの登録で入力されている値を保持
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            // 'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        // $email = $request->email;
+        // $password = $request->password;
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        $inputs = $request->all();
+
+        // $user = User::create([
+        //     // 'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        // ]);
+
+        // event(new Registered($user));
+
+        // Auth::login($user);
+
+        // return redirect(RouteServiceProvider::HOME);
+        //ユーザ登録画面へ
+        // return view('auth.usersregister',compact('email', 'password'));
+         //入力内容確認ページのviewに変数を渡して表示
+        return view('auth.usersregister', [
+            'request' => $inputs,
         ]);
+    }
 
-        event(new Registered($user));
+    //ユーザ情報登録で入力されている値を保持
+    public function usersstore(Request $request)
+    {
+        // $request->validate([
+        //     // 'name' => ['required', 'string', 'max:255'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        // ]);
 
-        Auth::login($user);
+        //保持している値（＝確認画面に送る値）
+        // $email = $request->email;
+        // $password = $request->password;
+        // $name = $request->name;
+        // $nick_name = $request->nick_name;
+        // $postal_code = $request->postal_code;
+        // $address = $request->address;
 
-        return redirect(RouteServiceProvider::HOME);
+        $inputs = $request->all();
+
+        // $user = User::create([
+        //     // 'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        // ]);
+
+        // event(new Registered($user));
+
+        // Auth::login($user);
+
+        // return redirect(RouteServiceProvider::HOME);
+        //確認画面へ
+        return view('auth.usersregister',[
+            'request' => $inputs,
+        ]);
+    }
+
+    public function confirm(Request $request)
+    {
+        // // Bladeで使う変数
+        // $hash = array(
+        //     'request' => $request,
+        //     'email' => 'email',
+        //     'password' => 'password',
+        //     'name' => 'name',
+        //     'nickname' => 'nickname',
+        //     'postalcode' => 'postalcode',
+        //     'address' => 'address',
+        // );
+        // return view('confirm')->with($hash);
+        $inputs = $request->all();
+
+        return view('auth.confirmregister',[
+            'request' => $inputs,
+        ]);
     }
 }
