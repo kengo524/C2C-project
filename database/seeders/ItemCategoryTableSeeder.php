@@ -17,7 +17,7 @@ class ItemCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i < 7; $i++){
+        for ($i = 1; $i < 8; $i++){
             DB::table('item_categories')->insert([
                 'name' => "test_category_${i}",
                 'created_at' => Carbon::now(),
