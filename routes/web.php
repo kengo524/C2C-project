@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +27,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+
+//ユーザのルート
+Route::get('/mypage', [UserController::class, 'mypage'])->middleware(['auth'])->name('mypage');
+
+
+//購入系のルート
+Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth'])->name('orders');
+Route::get('/orders/{id}', [OrderController::class, 'show'])->middleware(['auth'])->name('order');
+
