@@ -30,11 +30,10 @@ class ItemController extends Controller
         //入力内容確認ページのviewに変数を渡して表示
         return view('item.confirm', [
             'request' => $inputs,
-            'login_user_id' => $login_user_id,
         ]);
     }
 
-    //出品内容の保存
+    //出品内容のDB保存
     public function create(Request $request)
     {
         // 現在ログインしているユーザー情報の取得
@@ -44,23 +43,25 @@ class ItemController extends Controller
 
         // フォルダモデルのインスタンスを生成
         $item = new Item();
-        $item->user_id = $request->user_id;
-        $item->item_category_id = $request->item_category_id;
+        $item->user_id = $user_id;
+        $item->category_id = $request->item_category_id;
         $item->name = $request->name;
         $item->explanation = $request->explanation;
         $item->price = $request->price;
         $item->shipping_const = $request->shipping_const;
         $item->stock_quantity = $request->stock_quantity;
+        $item->image = $request->image;
 
         // インスタンスの状態をデータベースに書き込む
-        $item()->save($item);
+        $item->save();
 
-        return redirect()->route('item/complete');
+        return redirect()->route('item.complete');
     }
 
-    //出品内容の保存
-    public function complete(Request $request)
+    //新規出品完了画面
+    public function complete()
     {
-        return view('item/complete');
+        return view('item.complete');
     }
+
 }

@@ -64,6 +64,9 @@
                 <div class="text-right">
                   <button type="submit" class="btn btn-primary">次へ（確認画面）</button>
                 </div>
+                <div>
+                    <button type="button" onClick="history.back()">戻る</button>
+                </div>
               </form>
             </div>
           </nav>
