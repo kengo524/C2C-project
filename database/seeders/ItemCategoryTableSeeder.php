@@ -17,10 +17,12 @@ class ItemCategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('item_categories')->insert([
-            'name' => "test_category",
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        for ($i = 1; $i < 7; $i++){
+            DB::table('item_categories')->insert([
+                'name' => "test_category_${i}",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
     }
 }
