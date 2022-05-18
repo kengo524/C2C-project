@@ -39,12 +39,12 @@
                 </div>
                 <div class="form-group">
                     <label for="item_category_id">商品カテゴリ:</label>
-                    <p>{{ $request['item_category_id'] }}</p>
+                    <p>{{ $item_category_name }}</p>
                     <input type="hidden" class="form-control" name="item_category_id" id="item_category_id" value="{{ $request['item_category_id'] }}" />
                 </div>
                 <div class="form-group">
                     <label for="price">販売価格:</label>
-                    <p>{{ $request['price'] }}</p>
+                    <p>{{ $request['price'] }}円</p>
                     <input type="hidden" class="form-control" name="price" id="price" value="{{ $request['price'] }}" />
                 </div>
                 <div class="form-group">

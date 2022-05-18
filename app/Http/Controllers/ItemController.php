@@ -24,12 +24,18 @@ class ItemController extends Controller
     //新規出品確認画面
     public function confirm(CreateItem $request)
     {
+        // すべての商品カテゴリを取得する
+        $item_categories = ItemCategory::all();
+        $item_category_name = ItemCategory::find($request['item_category_id'])->name;
+
         //フォームから受け取ったすべてのinputの値を取得
         $inputs = $request->all();
 
         //入力内容確認ページのviewに変数を渡して表示
         return view('item.confirm', [
             'request' => $inputs,
+            'item_category_name' => $item_category_name,
+
         ]);
     }
 
