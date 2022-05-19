@@ -19,16 +19,18 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => "ss",
-            'email' => "ss@email.com",
-            'password' => Hash::make("ssssssss"),
-            'phone_number' => "000-0000-0000",
-            'postal_code' => "000-0000",
-            'address' => "東京都恵比寿１丁目１－１",
-            'nick_name' => "ssくん",
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        for ($i = 1; $i < 4; $i++){
+            DB::table('users')->insert([
+                'name' => "test_user_${i}",
+                'email' => "test_user_${i}@email.com",
+                'password' => Hash::make("ssssssss"),
+                'phone_number' => "000-0000-0000",
+                'postal_code' => "000-0000",
+                'address' => "東京都恵比寿${i}丁目${i}－${i}",
+                'nick_name' => "test_user_${i}くん",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
     }
 }

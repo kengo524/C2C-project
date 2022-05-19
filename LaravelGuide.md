@@ -1,3 +1,5 @@
+php artisan make:controller HomeController
+
 ### モデル作成＆マイグレーションファイル作成
 ```php artisan make:model モデル名 --migration```
 ### シーダー作成

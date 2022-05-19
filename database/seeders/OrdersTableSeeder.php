@@ -17,11 +17,15 @@ class OrdersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('orders')->insert([
-            'user_id' => 1,
-            'price' => 10000,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        for($i = 0; $i < 10; $i++){
+            $user_id =  rand(1,3);
+            $price = rand(1000,50000);
+            DB::table('orders')->insert([
+                'user_id' => $user_id,
+                'price' => $price,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
     }
 }

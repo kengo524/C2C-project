@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
+    //商品一覧
+    public function itemDetail($id){
+
+        $item = Item::find($id);
+        $categories = ItemCategory::get();
+
+        return view('item.detail',compact('item','categories'));
+    }
+  
     //新規出品フォームの表示
     public function showCreateForm()
     {

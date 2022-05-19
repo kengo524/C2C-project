@@ -24,18 +24,24 @@ class ItemTableSeeder extends Seeder
         // $item = Item::
         // $category = ItemCategory();
 
-        DB::table('items')->insert([
-            'name' => "test_category",
-            'user_id' => 1,
-            'category_id' => 1,
-            'name' => "testItem",
-            'explanation' => "testItemです。",
-            'price' => 100,
-            'image' => "src",
-            'stock_quantity' => 3,
-            'shipping_const' => 100,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        for($i = 1; $i < 101; $i++){
+            $user_id =  rand(1,3);
+            $category_id =  rand(1,6);
+            $price =  rand(100,10000);
+            $stock =  rand(1,20);
+            $shipping_cost =  rand(10,100);
+            DB::table('items')->insert([
+                'name' => "test_item_${i}",
+                'user_id' => $user_id,
+                'category_id' => $category_id,
+                'explanation' => "testItem_${i}です。",
+                'price' => $price,
+                'image' => "src",
+                'stock_quantity' => $stock,
+                'shipping_const' => $shipping_cost,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
     }
 }
