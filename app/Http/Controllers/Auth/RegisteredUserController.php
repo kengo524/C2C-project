@@ -135,7 +135,7 @@ class RegisteredUserController extends Controller
         // インスタンスの状態をデータベースに書き込む
         $user->save();
 
-        return redirect()->route('items', [
+        return redirect()->route('homepage', [
             'id' => $user->id,
         ]);
     }
