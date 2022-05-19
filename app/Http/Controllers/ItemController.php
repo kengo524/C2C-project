@@ -7,6 +7,8 @@ use App\Models\ItemCategory;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CreateItem;
 use Illuminate\Http\Request;
+use App\Image;//画像関係
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -31,11 +33,16 @@ class ItemController extends Controller
         //フォームから受け取ったすべてのinputの値を取得
         $inputs = $request->all();
 
+        //選択した画像のプレビュー表示
+        $file = file_get_contents($request['image']);//画像の情報だけを文字列化
+        $imageText = base64_encode($file);
+        $inputs['image'] = $imageText;
+
         //入力内容確認ページのviewに変数を渡して表示
         return view('item.confirm', [
             'request' => $inputs,
             'item_category_name' => $item_category_name,
-
+            'imageText' => $imageText,
         ]);
     }
 
@@ -56,7 +63,11 @@ class ItemController extends Controller
         $item->price = $request->price;
         $item->shipping_const = $request->shipping_const;
         $item->stock_quantity = $request->stock_quantity;
-        $item->image = $request->image;
+        //画像はデコードを行い、ストレージに保存したものをカラムに代入
+        $image = base64_decode($request['image']);
+        Storage::put('sample1.jpg', $image);
+
+        $item->image = 'sample1.jpg';
 
         // インスタンスの状態をデータベースに書き込む
         $item->save();

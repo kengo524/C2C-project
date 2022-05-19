@@ -24,7 +24,11 @@
                 @csrf
                 <div class="form-group">
                     <label for="image">商品画像:</label>
-                    <p>{{ $request['image'] }}</p>
+                    <img src="data:image/jpg;base64, {{ $imageText }}" width="200" height="100">
+                    {{-- <p>{{ $image }}</p> --}}
+                        {{-- @foreach($images as $ image)
+                            <img src"{{ Storage::url($image->image) }}">
+                        @endforeach --}}
                     <input type="hidden" class="form-control" name="image" id="image" value="{{ $request['image'] }}"/>
                 </div>
                 <div class="form-group">

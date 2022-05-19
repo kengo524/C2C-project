@@ -25,11 +25,12 @@ class CreateItem extends FormRequest
     {
         return [
             'name' => 'required|max:100',
-            'explanation' => 'required|max:500',//500勝手につけたがいい？
+            'explanation' => 'required|max:500',
             'item_category_id' => 'required',
-            'price' => 'required|min:1',
+            'price' => 'required|integer|numeric|min:1',
             'stock_quantity' => 'required',
             'shipping_const' => 'required',
+            'image' => 'required',
         ];
     }
 

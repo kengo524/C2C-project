@@ -27,7 +27,7 @@
                         @endforeach
                     </div>
                 @endif
-              <form action="{{ route('item.confirm') }}" method="post">
+              <form action="{{ route('item.confirm') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                   <label for="name">商品名</label>
@@ -59,7 +59,8 @@
                 </div>
                 <div class="form-group">
                     <label for="image">商品画像</label>
-                    <input type="text" class="form-control" name="image" id="image" value="{{ old('image') }}"/>
+                    {{-- <input type="text" class="form-control" name="image" id="image" value="{{ old('image') }}"/> --}}
+                    <input type="file" name="image" accept="image/png, image/jpeg" id="image" value="{{ old('image') }}">
                 </div>
                 <div class="text-right">
                   <button type="submit" class="btn btn-primary">次へ（確認画面）</button>
