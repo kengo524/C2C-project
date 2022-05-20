@@ -32,6 +32,8 @@ class RegisterUsersEdit extends FormRequest
             'email' => 'required|email|unique:users',
             //Password
             'password' => 'required|string|min:8',
+            //PhoneNumber（ハイフンなし）
+            'phone_number' => 'required|string|max:11|min:10',
             //PostalCode（ハイフンなし）
             'postal_code' => 'required|string|digits:7',
             //Address

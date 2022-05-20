@@ -27,6 +27,9 @@
         <p>Password:</p>
         <input type="text" class="form-control" name="password" id="password" >
         {{-- 電話番号追加 --}}
+        <p>PhoneNumber:</p>
+        <p>ハイフンなしで入力してください</p>
+        <input type="text" class="form-control" name="phone_number" id="phone_number" value="{{ $user['phone_number'] }}">
         <p>PostalCode:</p>
         <p>ハイフンなしで入力してください</p>
         <input type="text" class="form-control" name="postal_code" id="postal_code" value="{{ $user['postal_code'] }}">

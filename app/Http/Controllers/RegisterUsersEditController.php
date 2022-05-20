@@ -30,6 +30,7 @@ class RegisterUsersEditController extends Controller
     $user->nick_name = $request->nick_name;
     $user->email = $request->email;
     $user->password = Hash::make($request->password);
+    $user->phone_number = $request->phone_number;
     $user->postal_code = $request->postal_code;
     $user->address = $request->address;
     $user->save();
