@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -13,7 +14,9 @@ class UserController extends Controller
      */
     public function mypage()
     {
-        return view('user.mypage');
+        $login_user_id = auth()->user()->id;
+        $user = User::find($login_user_id);
+        return view('user.mypage', compact('user'));
     }
 
     /**
