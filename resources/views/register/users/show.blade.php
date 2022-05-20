@@ -20,20 +20,20 @@
       <form method="POST" action="{{ route('register.users.edited', ['id'=>$user->id]) }}">
         @csrf
         <p>氏名：{{ $user['name'] }}</p>
-        <p>NickName:</p>
+        <p>ニックネーム:</p>
         <input type="text" class="form-control" name="nick_name" id="nick_name" value="{{ $user['nick_name'] }}">
-        <p>Email:</p>
+        <p>メールアドレス:</p>
         <input type="text" class="form-control" name="email" id="email" value="{{ $user['email'] }}">
-        <p>Password:</p>
+        <p>パスワード:</p>
         <input type="text" class="form-control" name="password" id="password" >
         {{-- 電話番号追加 --}}
-        <p>PhoneNumber:</p>
+        <p>電話番号:</p>
         <p>ハイフンなしで入力してください</p>
         <input type="text" class="form-control" name="phone_number" id="phone_number" value="{{ $user['phone_number'] }}">
-        <p>PostalCode:</p>
+        <p>郵便番号:</p>
         <p>ハイフンなしで入力してください</p>
         <input type="text" class="form-control" name="postal_code" id="postal_code" value="{{ $user['postal_code'] }}">
-        <p>Address:</p>
+        <p>住所:</p>
         <input type="text" class="form-control" name="address" id="address" value="{{ $user['address'] }}">
         <input type="submit" value="変更する">
       </form>

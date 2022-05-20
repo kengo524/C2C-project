@@ -25,13 +25,36 @@ class RegisterShippingaddressEdit extends FormRequest
     {
         return [
             //郵便番号（ハイフンなし）
-            'postal_code' =>'required|string|digits:7',
+            'postal_code' =>'required|integer|digits:7',
             //住所
             'address' =>'required|string',
             //電話番号(ハイフンなし)
-            'phone_number' =>'required|string|max:11|min:10',
+            'phone_number' =>'required|integer|max:11|min:10',
             //氏名
             'name' =>'required|max:20',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            //郵便番号（ハイフンなし）
+            'postal_code' =>'郵便番号',
+            //住所
+            'address' =>'住所',
+            //電話番号(ハイフンなし)
+            'phone_number' =>'電話番号',
+            //氏名
+            'name' =>'氏名',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'phone_number.min' => ':attribute は１０文字以上１１文字以下で設定してください。',
+            'phone_number.max' => ':attribute は１０文字以上１１文字以下で設定してください。',
+            'postal_code.digits' => '正しい:attributeを入力してください。',
+            'name.max' => ':attribute は２０文字以下で設定してください。',
         ];
     }
 }
