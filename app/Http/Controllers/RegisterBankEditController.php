@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\BankAccount;
+use App\Http\Requests\RegisterBankEdit;
 
 class RegisterBankEditController extends Controller
 {
@@ -21,7 +22,7 @@ class RegisterBankEditController extends Controller
     }
 
     //変更完了画面の表示
-    public function edit(Request $request)
+    public function edit(RegisterBankEdit $request)
     {
         // リクエストされた ID でデータを取得(編集対象)
         $login_user_id = auth()->user()->id;

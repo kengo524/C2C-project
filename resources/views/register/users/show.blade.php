@@ -7,6 +7,15 @@
         <title>editusersregister</title>
     </head>
     <body>
+        @if ($errors->any())
+	    <div class="alert alert-danger">
+	        <ul>
+	            @foreach ($errors->all() as $error)
+	                <li>{{ $error }}</li>
+	            @endforeach
+	        </ul>
+	    </div>
+	    @endif
       <div>基本情報</div>
       <form method="POST" action="{{ route('register.users.edited', ['id'=>$user->id]) }}">
         @csrf
@@ -17,7 +26,9 @@
         <input type="text" class="form-control" name="email" id="email" value="{{ $user['email'] }}">
         <p>Password:</p>
         <input type="text" class="form-control" name="password" id="password" >
+        {{-- 電話番号追加 --}}
         <p>PostalCode:</p>
+        <p>ハイフンなしで入力してください</p>
         <input type="text" class="form-control" name="postal_code" id="postal_code" value="{{ $user['postal_code'] }}">
         <p>Address:</p>
         <input type="text" class="form-control" name="address" id="address" value="{{ $user['address'] }}">

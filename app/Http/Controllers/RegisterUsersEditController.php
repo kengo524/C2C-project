@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\RegisterUsersEdit;
 use App\Models\ShippingAddress;
 
 class RegisterUsersEditController extends Controller
@@ -19,7 +20,7 @@ class RegisterUsersEditController extends Controller
         return view('register.users.show', compact('user'));
     }
 
-    public function edit(Request $request)
+    public function edit(RegisterUsersEdit $request)
 {
     // リクエストされた ID でタスクデータを取得(編集対象)
     $login_user_id = auth()->user()->id;

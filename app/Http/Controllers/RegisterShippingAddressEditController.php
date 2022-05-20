@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\ShippingAddress;
 use Illuminate\Http\Request;
+use App\Http\Requests\RegisterShippingAddressEdit;
 
 class RegisterShippingAddressEditController extends Controller
 {
@@ -20,7 +21,7 @@ class RegisterShippingAddressEditController extends Controller
     }
 
         //変更完了画面の表示
-        public function edit($id, Request $request)
+        public function edit($id, RegisterShippingAddressEdit $request)
         {
             // リクエストされた ID でデータを取得(編集対象)
             $user = User::find($id);
