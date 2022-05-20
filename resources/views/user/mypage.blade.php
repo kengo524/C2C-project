@@ -13,6 +13,6 @@
       <a href="{{ route('orders') }}">購入履歴</a>
       <a href="{{ route('mypage') }}">出品履歴</a>
       <a href="{{ route('mypage') }}">出金</a>
-      <a href="{{ route('mypage') }}">ユーザー情報変更</a>
+      <a href="{{ route('register.edit', ['id'=>$user->id]) }}">ユーザー情報変更</a>
     </body>
 </html>
