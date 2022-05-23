@@ -26,7 +26,7 @@
         <input type="text" class="form-control" name="address" id="address" value="{{ $shipping_address['address'] }}">
         <p>電話番号:</p>
         <p>ハイフンなしで入力してください</p>
-        <input type="text" class="form-control" name="phone_number" id="phone_number" value="{{ $user['phone_number'] }}" >
+        <input type="text" class="form-control" name="phone_number" id="phone_number" value="{{ $shipping_address['phone_number'] }}" >
         <p>氏名:</p>
         <input type="text" class="form-control" name="name" id="name" value="{{ $shipping_address['name'] }}">
         <input type="submit" value="変更する">

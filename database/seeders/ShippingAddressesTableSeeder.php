@@ -24,7 +24,7 @@ class ShippingAddressesTableSeeder extends Seeder
                 'name' => "ss.brother",
                 'postal_code' => 5555555,
                 'address' => "兵庫県神戸市灘区${i}-${i}",
-                'phone_number' => "000-0000-0000",
+                'phone_number' => "09000000000",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

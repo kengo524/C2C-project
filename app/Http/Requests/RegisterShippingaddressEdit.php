@@ -28,8 +28,8 @@ class RegisterShippingaddressEdit extends FormRequest
             'postal_code' =>'required|integer|digits:7',
             //住所
             'address' =>'required|string',
-            //電話番号(ハイフンなし)
-            'phone_number' =>'required|integer|max:11|min:10',
+            //電話番号(ハイフンなし)最大値一旦削除
+            'phone_number' =>'required|integer|min:10',
             //氏名
             'name' =>'required|max:20',
         ];
