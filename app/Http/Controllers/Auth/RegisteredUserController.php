@@ -125,7 +125,7 @@ class RegisteredUserController extends Controller
         $user = new User();
         // 入力値を代入する
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
         $user->name = $request->name;
         $user->nick_name = $request->nick_name;
         $user->phone_number = $request->phone_number;
