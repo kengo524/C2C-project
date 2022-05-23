@@ -29,7 +29,7 @@ class RegisterUsersEdit extends FormRequest
             //NickName
             'nick_name' => 'required|max:20',
             //Email
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             //Password
             'password' => 'required|string|min:8',
             //PhoneNumber（ハイフンなし）

@@ -24,19 +24,20 @@ class RegisterShippingAddressEditController extends Controller
         public function edit($id, RegisterShippingAddressEdit $request)
         {
             // リクエストされた ID でデータを取得(編集対象)
-            $user = User::find($id);
+            // $user = User::find($id);
             $login_user_id = auth()->user()->id;
             $shipping_address = ShippingAddress::find($login_user_id);
+            // dd($shipping_address);
 
             // 編集対象のデータにデータの入力値を詰めてDBに保存する
             $shipping_address->postal_code = $request->postal_code;
             $shipping_address->address = $request->address;
-            $user->phone_number = $request->phone_number;
+            $shipping_address->phone_number = $request->phone_number;
             $shipping_address->name = $request->name;
             $shipping_address->save();
-            $user->save();
 
             // お届け先情報変更確認画面へリダイレクト
-            return view('register.shippingaddress.edit', compact('user','shipping_address'));
+            // return view('register.shippingaddress.edit', compact('user','shipping_address'));
+            return view('register.shippingaddress.edit', compact('shipping_address'));
         }
 }
