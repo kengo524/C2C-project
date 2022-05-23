@@ -33,7 +33,7 @@ class RegisterUsersEdit extends FormRequest
             //Password
             'password' => 'required|string|min:8',
             //PhoneNumber（ハイフンなし）
-            'phone_number' => 'required|integer|max:11|min:10',
+            'phone_number' => 'required|string|between:10,11',
             //PostalCode（ハイフンなし）
             'postal_code' => 'required|integer|digits:7',
             //Address
@@ -64,8 +64,7 @@ class RegisterUsersEdit extends FormRequest
         return [
             'email.unique' => 'この:attribute は既に使用しています。',
             'password.min' => ':attribute は８文字以上で設定してください。',
-            'phone_number.min' => ':attribute は１０文字以上１１文字以下で設定してください。',
-            'phone_number.max' => ':attribute は１０文字以上１１文字以下で設定してください。',
+            'phone_number.between' => ':attribute は１０文字以上１１文字以下で設定してください。',
             'postal_code.digits' => '正しい:attributeを入力してください。',
         ];
     }

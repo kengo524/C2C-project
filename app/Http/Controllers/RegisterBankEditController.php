@@ -34,6 +34,7 @@ class RegisterBankEditController extends Controller
         $bank_account->branch_name = $request->branch_name;
         $bank_account->type = $request->type;
         $bank_account->bank_number = $request->bank_number;
+        // dd($bank_account);
         $bank_account->save();
 
         // 口座情報変更確認画面へリダイレクト
