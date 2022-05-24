@@ -31,7 +31,7 @@ class RegisterBankEdit extends FormRequest
             //支店名
             'branch_name' =>'required|string',
             //預金種別
-            'bank_account' => 'required|string',
+            'type' => 'required|string',
             //口座番号
             'bank_number' => 'required|integer',
         ];
