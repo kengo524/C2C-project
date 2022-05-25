@@ -26,17 +26,28 @@
         <button type="submit">ログイン</button>
       </form>
       @endguest
+
+      <form>
+        <div>
+          <input type="search" name="search"  value="{{request('search')}}" placeholder="キーワードを入力" aria-label="検索...">
+        </div>
+        <input type="submit" value="検索" class="btn btn-info">
+      </form>
+
       @foreach($items as $item)
       <a href="{{ route('item_detail',[ 'id' => $item->id]) }}">
-        ユーザID:{{$item->user_id}}<br>
+        <img src= {{$item->user_id}}><br>
+        出品者ID:{{$item->user_id}}<br>
         カテゴリ:{{$categories[$item->category_id]->name}}<br>
         名前:{{$item->name}}<br>
         値段:{{$item->price}}<br>
-        画像:{{$item->image}}<br>
         送料:{{$item->shipping_const}}<br>
       </a>
       <br>
       @endforeach
+      <div>
+        {{ $items->links('vendor.pagination.default') }}
+      </div>
       <a href="{{ route('homepage') }}">戻る</a>
     </body>
 </html>

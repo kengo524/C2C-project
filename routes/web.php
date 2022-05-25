@@ -2,7 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RegisterEditController;
+use App\Http\Controllers\RegisterUsersEditController;
+use App\Http\Controllers\RegisterBankEditController;
+use App\Http\Controllers\RegisterShippingAddressEditController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
@@ -48,6 +53,18 @@ Route::prefix('item')->group(function (){
 //ユーザのルート
 Route::get('/mypage', [UserController::class, 'mypage'])->middleware(['auth'])->name('mypage');
 
+//ユーザ情報変更系のルート
+Route::get('/register/edit/{id}', [RegisterEditController::class, 'index'])->middleware(['auth'])->name('register.edit');
+//基本情報変更
+Route::get('/register/users/edit/{id}', [RegisterUsersEditController::class, 'show'])->middleware(['auth'])->name('register.users.edit');
+Route::post('/register/users/edited/{id}', [RegisterUsersEditController::class, 'edit'])->middleware(['auth'])->name('register.users.edited');
+//口座情報変更
+Route::get('/register/bank/edit/{id}', [RegisterBankEditController::class, 'show'])->middleware(['auth'])->name('register.bank.edit');
+Route::post('/register/bank/edited/{id}', [RegisterBankEditController::class, 'edit'])->middleware(['auth'])->name('register.bank.edited');
+//お届け先情報変更
+Route::get('/register/shippingaddress/edit/{id}', [RegisterShippingAddressEditController::class, 'show'])->middleware(['auth'])->name('register.shippingaddress.edit');
+Route::post('/register/shippingaddress/edited/{id}', [RegisterShippingAddressEditController::class, 'edit'])->middleware(['auth'])->name('register.shippingaddress.edited');
+
 //購入系のルート
 Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth'])->name('orders');
 Route::get('/orders/{id}', [OrderController::class, 'show'])->middleware(['auth'])->name('order');
@@ -65,3 +82,12 @@ Route::get('/cart/quantity_error', [CartController::class, 'quantity_error'])->n
 //カート追加時、在庫以上の追加が出来ないエラー表示
 Route::get('/cart/add_error', [CartController::class, 'add_error'])->name('cart.add_error');
 Route::post('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+
+//出品履歴
+Route::get('/listing', [ListingController::class, 'index'])->middleware(['auth'])->name('listing'); //履歴一覧
+Route::get('/listing/{id}', [ListingController::class, 'show'])->middleware(['auth'])->name('list'); //履歴詳細
+Route::get('/listing/edit/{id}', [ListingController::class, 'edit'])->middleware(['auth'])->name('list.edit'); //履歴編集
+Route::post('/listing/edited/{id}', [ListingController::class, 'edited'])->middleware(['auth'])->name('list.edited'); //履歴編集実行
+// Route::get('/listing/delete/{id}', [ListingController::class, 'delete'])->middleware(['auth'])->name('list.delete'); //履歴削除確認
+// Route::post('/listing/deleted/{id}', [ListingController::class, 'deleted'])->middleware(['auth'])->name('list.deleted');
+

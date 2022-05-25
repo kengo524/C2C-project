@@ -30,6 +30,7 @@ class ItemTableSeeder extends Seeder
             $price =  rand(100,10000);
             $stock =  rand(1,20);
             $shipping_cost =  rand(10,100);
+            $status = rand(1,2);
             DB::table('items')->insert([
                 'name' => "test_item_${i}",
                 'user_id' => $user_id,
@@ -41,6 +42,7 @@ class ItemTableSeeder extends Seeder
                 'shipping_const' => $shipping_cost,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'status' => $status,
             ]);
         }
     }
