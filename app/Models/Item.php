@@ -9,6 +9,8 @@ class Item extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['stock_quantity'];
+
     const STATUS = [
         1 => [ 'label' => '公開' ],
         2 => [ 'label' => '非公開' ],

@@ -94,7 +94,7 @@ return [
         'array' => 'The :attribute must have at least :min items.',
         'file' => 'The :attribute must be at least :min kilobytes.',
         'numeric' => ' :attribute は :min 円以上でお願いします。',
-        'string' => 'The :attribute must be at least :min characters.',
+        'string' => ' :attribute は :min 文字以上でお願いします。',
     ],
     'multiple_of' => 'The :attribute must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',

@@ -6,7 +6,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderDetail;
-
+use App\Models\Item;
+use App\Models\Cart;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -34,5 +37,47 @@ class OrderController extends Controller
         $order_id = $id;
         $order_details = OrderDetail::where('order_id',$order_id)->get();
         return view('order.show',compact('order_details'));
+    }
+
+    //注文DBへの保存処理+注文DB詳細への保存＋カートDB削除同時実行
+    public function create(Request $request)
+    {
+        $request = $request->all();
+        $user_id = Auth::id();
+        $cart_items = Cart::where('user_id', $user_id)->get();
+        $items = Item::get();
+
+        //カート内の各商品が購入確定時に在庫内か判別
+        foreach($cart_items as $cart_item){
+            if($cart_item->quantity > $items[$cart_item->item_id-1]->stock_quantity){
+                return redirect()->route('cart.quantity_error');
+            }else{
+            }
+        }
+
+        //在庫範囲内であれば下記フローを実行
+        //注文DBへの保存
+        $order = new Order();
+        $order->user_id = $user_id;
+        $order->price = $request['total_price'];
+        $order->save();
+
+        //注文詳細DBの保存+商品在庫の調整
+        foreach($cart_items as $cart_item){
+            $orderDetail = New OrderDetail();
+            $orderDetail->order_id = $order->id;
+            $orderDetail->item_id  = $cart_item->item_id;
+            $orderDetail->quantity = $cart_item->quantity;
+            $orderDetail->price = ($items[$cart_item->item_id-1]->price)*($cart_item->quantity);
+            $orderDetail->save();
+
+            Item::find($cart_item->item_id)->update(['stock_quantity' => ($items[$cart_item->item_id-1]->stock_quantity) - ($cart_item->quantity)]);
+        }
+
+        //カートDB削除
+        $cart_items->each->delete();
+
+        return redirect()->route('cart.complete');
+
     }
 }
