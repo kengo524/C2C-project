@@ -23,6 +23,7 @@ class OrderDetailsTableSeeder extends Seeder
             $order_id = rand(1,10);
             $item_id = rand(1,50);
             $quantity = rand(1,5);
+            $status = rand(1,3);
             DB::table('order_details')->insert([
                 'order_id' => $order_id,
                 'item_id' => $item_id,
@@ -30,6 +31,7 @@ class OrderDetailsTableSeeder extends Seeder
                 'price' => $price,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'status' => $status,
             ]);
         }
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CartController;
 
 
 /*
@@ -50,4 +51,17 @@ Route::get('/mypage', [UserController::class, 'mypage'])->middleware(['auth'])->
 //購入系のルート
 Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth'])->name('orders');
 Route::get('/orders/{id}', [OrderController::class, 'show'])->middleware(['auth'])->name('order');
+Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 
+//カート処理のルート
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'cartlist'])->middleware(['auth'])->name('cart.cartlist');
+Route::get('/cart/shippinginfo', [CartController::class, 'shippinginfo'])->name('cart.shippinginfo');
+Route::get('/cart/paymentinfo', [CartController::class, 'paymentinfo'])->name('cart.paymentinfo');
+Route::post('/cart/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
+Route::get('/cart/complete', [CartController::class, 'complete'])->name('cart.complete');
+//注文確定時、在庫以上の購入ができないエラー表示
+Route::get('/cart/quantity_error', [CartController::class, 'quantity_error'])->name('cart.quantity_error');
+//カート追加時、在庫以上の追加が出来ないエラー表示
+Route::get('/cart/add_error', [CartController::class, 'add_error'])->name('cart.add_error');
+Route::post('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');

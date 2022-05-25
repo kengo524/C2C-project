@@ -13,6 +13,7 @@
         <p>商品ID:{{$order_detail->item_id}}</p>
         <p>金額:{{$order_detail->price}}</p>
         <p>数量:{{$order_detail->quantity}}</p>
+        <p>状態：{{ $order_detail->status_label }}</p>
       @endforeach
       <a href="{{ route('orders') }}">戻る</a>
     </body>
