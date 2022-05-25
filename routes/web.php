@@ -7,6 +7,7 @@ use App\Http\Controllers\RegisterUsersEditController;
 use App\Http\Controllers\RegisterBankEditController;
 use App\Http\Controllers\RegisterShippingAddressEditController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ListingController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
@@ -67,3 +68,10 @@ Route::post('/register/shippingaddress/edited/{id}', [RegisterShippingAddressEdi
 Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth'])->name('orders');
 Route::get('/orders/{id}', [OrderController::class, 'show'])->middleware(['auth'])->name('order');
 
+//出品履歴
+Route::get('/listing', [ListingController::class, 'index'])->middleware(['auth'])->name('listing'); //履歴一覧
+Route::get('/listing/{id}', [ListingController::class, 'show'])->middleware(['auth'])->name('list'); //履歴詳細
+Route::get('/listing/edit/{id}', [ListingController::class, 'edit'])->middleware(['auth'])->name('list.edit'); //履歴編集
+Route::post('/listing/edited/{id}', [ListingController::class, 'edited'])->middleware(['auth'])->name('list.edited'); //履歴編集実行
+// Route::get('/listing/delete/{id}', [ListingController::class, 'delete'])->middleware(['auth'])->name('list.delete'); //履歴削除確認
+// Route::post('/listing/deleted/{id}', [ListingController::class, 'deleted'])->middleware(['auth'])->name('list.deleted');
