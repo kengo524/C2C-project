@@ -18,6 +18,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->integer('price');
             $table->timestamps();
+            $table->string('shipping_name');
+            $table->string('postal_code');
+            $table->string('address');
+            $table->string('phone_number', 20);
         });
     }
 
