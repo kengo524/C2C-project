@@ -42,7 +42,11 @@
                 </div>
 
                 <a href="{{ route('homepage') }}">買い物を続ける</a>
+                @if($cart_counts == 0)
+                <h3>カートには何も入っておりません。</h3>
+                @else
                 <a href="{{ route('cart.shippinginfo') }}">購入手続きへ</a>
+                @endif
           </nav>
         </div>
       </div>
