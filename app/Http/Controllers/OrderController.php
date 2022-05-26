@@ -62,6 +62,10 @@ class OrderController extends Controller
         $order = new Order();
         $order->user_id = $user_id;
         $order->price = $request['total_price'];
+        $order->shipping_name = $shipping_address->name;
+        $order->postal_code = $shipping_address->postal_code;
+        $order->address = $shipping_address->address;
+        $order->phone_number = $shipping_address->phone_number;
         $order->save();
 
         //注文詳細DBの保存+商品在庫の調整
@@ -71,10 +75,6 @@ class OrderController extends Controller
             $orderDetail->item_id  = $cart_item->item_id;
             $orderDetail->quantity = $cart_item->quantity;
             $orderDetail->price = ($items[$cart_item->item_id-1]->price)*($cart_item->quantity);
-            $orderDetail->shipping_name = $shipping_address->name;
-            $orderDetail->postal_code = $shipping_address->postal_code;
-            $orderDetail->address = $shipping_address->address;
-            $orderDetail->phone_number = $shipping_address->phone_number;
             $orderDetail->save();
 
             Item::find($cart_item->item_id)->update(['stock_quantity' => ($items[$cart_item->item_id-1]->stock_quantity) - ($cart_item->quantity)]);

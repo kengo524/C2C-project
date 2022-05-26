@@ -27,7 +27,6 @@
                 商品名:{{$item_info['name']}}<br>
                 数量:{{$item_info['quantity']}}<br>
                 小計:{{$item_info['subtotal']}}円<br>
-                <p>{{ $item_info['cart_id'] }}</p>
                 <form action="{{ route('cart.delete',['id'=>$item_info['cart_id']]) }}" id="{{ $item_info['cart_id'] }}" method="post">
                     @csrf
                 <input type="submit" class="btn btn-danger btn-dell" value="削除">
