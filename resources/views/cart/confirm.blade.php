@@ -36,10 +36,10 @@
 
             <div class="panel-heading">配送先情報確認</div>
             <div>
-                <p>氏名：{{ $shipping_addresses->name }}</p>
-                <p>郵便番号：{{ $shipping_addresses->postal_code }}</p>
-                <p>住所：{{ $shipping_addresses->address }}</p>
-                <p>電話番号：{{ $shipping_addresses->phone_number }}</p>
+                <p>氏名：{{ $shipping_address->name }}</p>
+                <p>郵便番号：{{ $shipping_address->postal_code }}</p>
+                <p>住所：{{ $shipping_address->address }}</p>
+                <p>電話番号：{{ $shipping_address->phone_number }}</p>
             </div>
             <div>
                 <p>:::::::::::::::::::::::::</p>

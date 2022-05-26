@@ -9,7 +9,7 @@ use App\Http\Requests\RegisterBankEdit;
 
 class RegisterBankEditController extends Controller
 {
-    //編集画面の表示
+    //編集画面の表示+新規登録ボタンの追加
     public function show($id)
     {
         //編集対象のデータを取得して、テンプレートに渡す
@@ -18,7 +18,12 @@ class RegisterBankEditController extends Controller
         $login_user_id = auth()->user()->id;
         $bank_account = BankAccount::find($login_user_id);
 
-        return view('register.bank.show', compact('user','bank_account'));
+        //既に口座番号保有している場合変更、そうでない場合新規登録への条件分岐
+        if($bank_account == null){
+            return view('register.bank.new', compact('user'));
+        }else{
+            return view('register.bank.show', compact('user','bank_account'));
+        }
     }
 
     //変更完了画面の表示
@@ -35,6 +40,25 @@ class RegisterBankEditController extends Controller
         $bank_account->type = $request->type;
         $bank_account->bank_number = $request->bank_number;
         // dd($bank_account);
+        $bank_account->save();
+
+        // 口座情報変更確認画面へリダイレクト
+        return view('register.bank.edit', compact('bank_account'));
+    }
+
+    //新規登録に伴う保存処理
+    public function create(RegisterBankEdit $request)
+    {
+        $login_user_id = auth()->user()->id;
+        //編集対象のデータを取得して、テンプレートに渡す
+
+        $bank_account = new BankAccount();
+        $bank_account->user_id = $login_user_id;
+        $bank_account->name = $request->name;
+        $bank_account->bank_name = $request->bank_name;
+        $bank_account->branch_name = $request->branch_name;
+        $bank_account->type = $request->type;
+        $bank_account->bank_number = $request->bank_number;
         $bank_account->save();
 
         // 口座情報変更確認画面へリダイレクト
