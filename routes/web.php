@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterBankEditController;
 use App\Http\Controllers\RegisterShippingAddressEditController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\ListingSoldController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
@@ -91,3 +92,6 @@ Route::post('/listing/edited/{id}', [ListingController::class, 'edited'])->middl
 // Route::get('/listing/delete/{id}', [ListingController::class, 'delete'])->middleware(['auth'])->name('list.delete'); //履歴削除確認
 // Route::post('/listing/deleted/{id}', [ListingController::class, 'deleted'])->middleware(['auth'])->name('list.deleted');
 
+//成約済み商品
+Route::get('/listing-sold', [ListingSoldController::class, 'index'])->middleware(['auth'])->name('listing-sold.index'); //成約済み一覧
+Route::get('/listing-sold/{id}', [ListingSoldController::class, 'show'])->middleware(['auth'])->name('listing-sold.show'); //成約済み詳細
