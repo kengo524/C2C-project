@@ -23,7 +23,7 @@
             <div class="alert alert-success">{{session('message')}}</div>
             @endif
                 @foreach($result as $item_info)
-                画像:{{$item_info['image']}}<br>
+                <img class="logo" src="{{ asset("storage/items/{$item_info['item_id']}/sample1.jpg") }}" width="100" height="100"><br><br>
                 商品名:{{$item_info['name']}}<br>
                 数量:{{$item_info['quantity']}}<br>
                 小計:{{$item_info['subtotal']}}円<br>
@@ -34,7 +34,6 @@
                 </form>
                 <p>**********************</p>
                 @endforeach
-
                 <div>
                     <p>-----------------------------------------------------------</p>
                     <p>合計：{{ $total_price }}円</p>
@@ -43,7 +42,11 @@
                 </div>
 
                 <a href="{{ route('homepage') }}">買い物を続ける</a>
+                @if($cart_counts == 0)
+                <h3>カートには何も入っておりません。</h3>
+                @else
                 <a href="{{ route('cart.shippinginfo') }}">購入手続きへ</a>
+                @endif
           </nav>
         </div>
       </div>

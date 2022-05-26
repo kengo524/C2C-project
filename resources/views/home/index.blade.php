@@ -13,10 +13,10 @@
         @csrf
         <button type="submit">ログアウト</button>
       </form>
-      <form method="GET" action="">
+      <form method="GET" action="{{ route('mypage') }}">
         <button type="submit">マイページへ</button>
       </form>
-      <form method="GET" action="">
+      <form method="GET" action="{{ route('cart.cartlist') }}">
         <button type="submit">カート</button>
       </form>
       @endauth
@@ -36,7 +36,7 @@
 
       @foreach($items as $item)
       <a href="{{ route('item_detail',[ 'id' => $item->id]) }}">
-        <img src= {{$item->user_id}}><br>
+        <img class="logo" src="{{ asset("storage/items/{$item->id}/sample1.jpg") }}" width="100" height="100"><br>
         出品者ID:{{$item->user_id}}<br>
         カテゴリ:{{$categories[$item->category_id]->name}}<br>
         名前:{{$item->name}}<br>

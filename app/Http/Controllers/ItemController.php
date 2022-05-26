@@ -18,9 +18,13 @@ class ItemController extends Controller
         $item = Item::find($id);
         $categories = ItemCategory::get();
 
-        return view('item.detail',compact('item','categories'));
+        $item_image = Storage::get("items/{$id}/sample1.jpg");
+        $imageText = base64_encode($item_image);
+
+
+        return view('item.detail',compact('item','categories','imageText'));
     }
-  
+
     //新規出品フォームの表示
     public function showCreateForm()
     {
@@ -72,14 +76,13 @@ class ItemController extends Controller
         $item->price = $request->price;
         $item->shipping_const = $request->shipping_const;
         $item->stock_quantity = $request->stock_quantity;
-        //画像はデコードを行い、ストレージに保存したものをカラムに代入
-        $image = base64_decode($request['image']);
-        Storage::put('sample1.jpg', $image);
-
         $item->image = 'sample1.jpg';
-
-        // インスタンスの状態をデータベースに書き込む
         $item->save();
+
+        //画像はデコードを行い、商品IDごとにストレージに保存
+        $id = $item->id;
+        $image = base64_decode($request['image']);
+        Storage::put("public/items/{$id}/sample1.jpg", $image);
 
         return redirect()->route('item.complete');
     }

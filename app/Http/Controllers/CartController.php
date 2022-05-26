@@ -18,6 +18,7 @@ class CartController extends Controller
         $login_user = auth()->user();
         $login_user_id = auth()->user()->id;
         $cart_items = Cart::where('user_id', $login_user_id)->get();
+        $cart_counts = Cart::where('user_id', $login_user_id)->count();
         $items = Item::get();
 
         //カート商品を配列を用いて格納、表示
@@ -32,7 +33,7 @@ class CartController extends Controller
             //まず、商品ごとのリストを作る。
             $list = [
                 'cart_id' => $cart_item->id,
-                'item' => $item,
+                'item_id' => $item->id,
                 'image' => $item->image,
                 'name' => $item->name,
                 'quantity' => $cart_item->quantity,
@@ -51,7 +52,8 @@ class CartController extends Controller
             'total_price',
             'total_shipping_cost',
             'payment_amount',
-            'result'
+            'result',
+            'cart_counts'
         ));
 
     }
@@ -68,6 +70,11 @@ class CartController extends Controller
         $cart_total_quantity = 0;
         $item = Item::find($request->item_id);
         $carts = Cart::where('item_id', $request->item_id)->get();
+
+        //ログインしていないとカートへの追加はできない。
+        if($user_id == null){
+            return redirect()->route('register');
+        }
 
         //カート商品追加の条件分岐（追加or増加）
         if($count == 0)
@@ -101,17 +108,23 @@ class CartController extends Controller
 
     //発送情報の呼び出し
     public function shippinginfo(){
-        $login_user = Auth::user();
+        $user = Auth::user();
         $user_id = Auth::id();
-        $shipping_addresses = ShippingAddress::find($user_id);
+        $shipping_address = ShippingAddress::find($user_id);
         $shipping_date = date("Y-m-d",strtotime("+6 day"));
-        // dd($shipping_addresses);
-        return view('cart.shippinginfo',compact(
-            'login_user',
-            'user_id',
-            'shipping_addresses',
-            'shipping_date',
-        ));
+        //dd($shipping_address);
+
+        //発送情報未登録の場合は、自動的に入力画面で登録するよう設定。
+        if($shipping_address == null){
+            return view('register.shippingaddress.new',compact('user', 'shipping_address'));
+        }else{
+            return view('cart.shippinginfo',compact(
+                'user',
+                'user_id',
+                'shipping_address',
+                'shipping_date',
+            ));
+        }
     }
 
     //決済内容の入力
@@ -125,7 +138,7 @@ class CartController extends Controller
         $request = $request->all();
         $login_user = Auth::user();
         $user_id = Auth::id();
-        $shipping_addresses = ShippingAddress::find($user_id);
+        $shipping_address = ShippingAddress::find($user_id);
         $shipping_date = date("Y-m-d",strtotime("+6 day"));
         $cart_items = Cart::where('user_id', $user_id)->get();
         $items = Item::get();
@@ -182,7 +195,7 @@ class CartController extends Controller
             'total_shipping_cost',
             'payment_amount',
             'result',
-            'shipping_addresses',
+            'shipping_address',
             'shipping_date',
             'request'
         ));

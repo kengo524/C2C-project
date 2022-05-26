@@ -8,7 +8,7 @@
     </head>
     <body>
       <div>ここはマイページ</div>
-      <a href="{{ route('mypage') }}">トップページへ</a>
+      <a href="{{ route('homepage') }}">トップページへ</a>
       <a href="{{ route('item.create') }}">新規出品</a>
       <a href="{{ route('orders') }}">購入履歴</a>
       <a href="{{ route('listing') }}">出品履歴</a>

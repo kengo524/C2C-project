@@ -20,16 +20,17 @@
           <nav class="panel panel-default">
             <div class="panel-heading">配送先情報確認</div>
                 <div>
-                    <p>氏名：{{ $shipping_addresses->name }}</p>
-                    <p>郵便番号：{{ $shipping_addresses->postal_code }}</p>
-                    <p>住所：{{ $shipping_addresses->address }}</p>
-                    <p>電話番号：{{ $shipping_addresses->phone_number }}</p>
+                    <p>氏名：{{ $shipping_address->name }}</p>
+                    <p>郵便番号：{{ $shipping_address->postal_code }}</p>
+                    <p>住所：{{ $shipping_address->address }}</p>
+                    <p>電話番号：{{ $shipping_address->phone_number }}</p>
                 </div>
                 <div>
                     <p>:::::::::::::::::::::::::</p>
                     <p>お届け予定日：{{ $shipping_date }}</p>
                 </div>
-                {{-- <a href="{{ route('register.edit', ['id'=>$login_user->id]) }}">配送先情報の変更</a> --}}
+                <p><a href="{{ route('register.shippingaddress.edit', ['id'=>$user->id]) }}">配送先情報の変更</a></p>
+                <p>(配送先変更される場合は、マイページからユーザー情報変更をお願いいたします。)</p>
                 <a href="{{ route('cart.paymentinfo') }}">決済情報のご入力</a>
           </nav>
         </div>
