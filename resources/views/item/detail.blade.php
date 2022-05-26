@@ -18,17 +18,18 @@
             <div class="alert alert-success">{{session('message')}}</div>
             @endif
       <div>ここは商品詳細ページ</div>
-        商品ID:{{$item->id}}<br>
-        ユーザID:{{$item->user_id}}<br>
-        カテゴリID:{{$item->category_id}}<br>
-        カテゴリ名:{{$categories[$item->category_id]->name}}<br>
-        説明:{{$item->explanation}}<br>
-        名前:{{$item->name}}<br>
-        値段:{{$item->price}}<br>
-        画像:{{$item->image}}<br>
-        在庫:{{$item->stock_quantity}}<br>
-        送料:{{$item->shipping_const}}<br>
-        更新日:{{$item->updated_at}}<br>
+        <p>商品ID:{{$item->id}}</p>
+        <img class="logo" src="{{ asset("storage/items/{$item->id}/sample1.jpg") }}" width="200" height="200"><br>
+        {{-- ユーザID:{{$item->user_id}}<br> --}}
+        {{-- カテゴリID:{{$item->category_id}}<br> --}}
+        <p>カテゴリ:{{$categories[$item->category_id]->name}}</p>
+        <p>商品名:{{$item->name}}</p>
+        <p>説明:{{$item->explanation}}</p>
+        <p>価格:{{$item->price}}</p>
+        <p>画像:{{$item->image}}</p>
+        <p>在庫:{{$item->stock_quantity}}</p>
+        <p>送料:{{$item->shipping_const}}</p>
+        <p>商品掲載日:{{$item->updated_at}}</p>
         <form action="{{ route('cart.add') }}" method="post">
             @csrf
             <input type="hidden" class="form-control" name="item_id" id="item_id" value="{{ $item->id }}" />

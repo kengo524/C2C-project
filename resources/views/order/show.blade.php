@@ -9,6 +9,7 @@
     <body>
       <div>ここは購入履歴詳細ページ</div>
       @foreach($order_details as $order_detail)
+        <p><img class="logo" src="{{ asset("storage/items/{$order_detail->item_id}/sample1.jpg") }}" width="100" height="100"><br></p>
         <p>注文詳細ID:{{$order_detail->id}}</p>
         <p>商品ID:{{$order_detail->item_id}}</p>
         <p>金額:{{$order_detail->price}}</p>
