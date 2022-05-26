@@ -16,7 +16,8 @@
 	        </ul>
 	    </div>
 	    @endif
-      <div>口座情報</div>
+      <div>口座番号変更</div>
+      <p>ご登録の売上代金の入金口座の変更ができます。</p>
       <form method="POST" action="{{ route('register.bank.edited', ['id'=>$user->id]) }}">
         @csrf
         <p>口座名義人:</p>

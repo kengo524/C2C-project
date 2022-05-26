@@ -9,8 +9,8 @@
     <body>
       <div>ここはユーザ情報変更ページ</div>
       <a href="{{ route('register.users.edit', ['id'=>$user->id]) }}">基本情報変更</a>
-      <a href="{{ route('register.bank.edit', ['id'=>$user->id]) }}">口座情報変更</a>
-      <a href="{{ route('register.shippingaddress.edit', ['id'=>$user->id]) }}">お届け先情報変更</a>
+      <a href="{{ route('register.bank.edit', ['id'=>$user->id]) }}">口座情報変更 / 新規登録</a>
+      <a href="{{ route('register.shippingaddress.edit', ['id'=>$user->id]) }}">お届け先情報変更 / 新規登録</a>
       <a href="{{ route('mypage') }}">マイページへ戻る</a>
     </body>
 </html>

@@ -58,12 +58,16 @@ Route::get('/register/edit/{id}', [RegisterEditController::class, 'index'])->mid
 //基本情報変更
 Route::get('/register/users/edit/{id}', [RegisterUsersEditController::class, 'show'])->middleware(['auth'])->name('register.users.edit');
 Route::post('/register/users/edited/{id}', [RegisterUsersEditController::class, 'edit'])->middleware(['auth'])->name('register.users.edited');
-//口座情報変更
+//口座情報変更＋登録
 Route::get('/register/bank/edit/{id}', [RegisterBankEditController::class, 'show'])->middleware(['auth'])->name('register.bank.edit');
 Route::post('/register/bank/edited/{id}', [RegisterBankEditController::class, 'edit'])->middleware(['auth'])->name('register.bank.edited');
-//お届け先情報変更
+Route::get('/register/bank/new', [RegisterBankEditController::class, 'show'])->middleware(['auth'])->name('register.bank.new');
+Route::post('/register/bank/create', [RegisterBankEditController::class, 'create'])->middleware(['auth'])->name('register.bank.create');
+//お届け先情報変更＋登録
 Route::get('/register/shippingaddress/edit/{id}', [RegisterShippingAddressEditController::class, 'show'])->middleware(['auth'])->name('register.shippingaddress.edit');
 Route::post('/register/shippingaddress/edited/{id}', [RegisterShippingAddressEditController::class, 'edit'])->middleware(['auth'])->name('register.shippingaddress.edited');
+Route::get('/register/shippingaddress/new', [RegisterShippingAddressEditController::class, 'show'])->middleware(['auth'])->name('register.shippingaddress.new');
+Route::post('/register/shippingaddress/create', [RegisterShippingAddressEditController::class, 'create'])->middleware(['auth'])->name('register.shippingaddress.create');
 
 //購入系のルート
 Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth'])->name('orders');
