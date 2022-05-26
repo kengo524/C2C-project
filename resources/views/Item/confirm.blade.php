@@ -20,11 +20,11 @@
           <nav class="panel panel-default">
             <div class="panel-heading">確認画面</div>
             <div class="panel-body">
-              <form action="{{ route('item.create') }}" method="post">
+              <form action="{{ route('item.create') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="image">商品画像:</label>
-                    <img src="data:image/jpg;base64, {{ $imageText }}" width="200" height="100">
+                    <img src="data:image/jpg;base64, {{ $imageText }}" width="200" height="200">
                     {{-- <p>{{ $image }}</p> --}}
                         {{-- @foreach($images as $ image)
                             <img src"{{ Storage::url($image->image) }}">

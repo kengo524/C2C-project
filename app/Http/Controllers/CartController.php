@@ -32,7 +32,7 @@ class CartController extends Controller
             //まず、商品ごとのリストを作る。
             $list = [
                 'cart_id' => $cart_item->id,
-                'item' => $item,
+                'item_id' => $item->id,
                 'image' => $item->image,
                 'name' => $item->name,
                 'quantity' => $cart_item->quantity,
