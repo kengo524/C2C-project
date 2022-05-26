@@ -18,6 +18,7 @@ class CartController extends Controller
         $login_user = auth()->user();
         $login_user_id = auth()->user()->id;
         $cart_items = Cart::where('user_id', $login_user_id)->get();
+        $cart_counts = Cart::where('user_id', $login_user_id)->count();
         $items = Item::get();
 
         //カート商品を配列を用いて格納、表示
@@ -51,7 +52,8 @@ class CartController extends Controller
             'total_price',
             'total_shipping_cost',
             'payment_amount',
-            'result'
+            'result',
+            'cart_counts'
         ));
 
     }
