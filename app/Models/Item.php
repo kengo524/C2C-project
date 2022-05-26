@@ -28,4 +28,9 @@ class Item extends Model
 
         return self::STATUS[$status]['label'];
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

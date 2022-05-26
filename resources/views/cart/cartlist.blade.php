@@ -22,13 +22,12 @@
             @if(session('message'))
             <div class="alert alert-success">{{session('message')}}</div>
             @endif
-                @foreach($result as $item_info)
-                <img class="logo" src="{{ asset("storage/items/{$item_info['item_id']}/sample1.jpg") }}" width="100" height="100"><br><br>
-                商品名:{{$item_info['name']}}<br>
-                数量:{{$item_info['quantity']}}<br>
-                小計:{{$item_info['subtotal']}}円<br>
-                <p>{{ $item_info['cart_id'] }}</p>
-                <form action="{{ route('cart.delete',['id'=>$item_info['cart_id']]) }}" id="{{ $item_info['cart_id'] }}" method="post">
+                @foreach($cart_item_lists as $cart_item_list)
+                <img class="logo" src="{{ asset("storage/items/{$cart_item_list['item_id']}/sample1.jpg") }}" width="100" height="100"><br><br>
+                商品名:{{$cart_item_list['name']}}<br>
+                数量:{{$cart_item_list['quantity']}}<br>
+                小計:{{$cart_item_list['subtotal']}}円<br>
+                <form action="{{ route('cart.delete',['id'=>$cart_item_list['cart_id']]) }}" id="{{ $cart_item_list['cart_id'] }}" method="post">
                     @csrf
                 <input type="submit" class="btn btn-danger btn-dell" value="削除">
                 </form>
@@ -42,7 +41,7 @@
                 </div>
 
                 <a href="{{ route('homepage') }}">買い物を続ける</a>
-                @if($cart_counts == 0)
+                @if($cart_items_count == 0)
                 <h3>カートには何も入っておりません。</h3>
                 @else
                 <a href="{{ route('cart.shippinginfo') }}">購入手続きへ</a>

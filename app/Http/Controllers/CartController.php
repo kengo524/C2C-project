@@ -16,22 +16,17 @@ class CartController extends Controller
     public function cartlist()
     {
         $login_user = auth()->user();
-        $login_user_id = auth()->user()->id;
-        $cart_items = Cart::where('user_id', $login_user_id)->get();
-        $cart_counts = Cart::where('user_id', $login_user_id)->count();
-        $items = Item::get();
+        $cart_items = Cart::where('user_id', $login_user->id)->get();
+        $cart_items_count = count($cart_items);
 
-        //カート商品を配列を用いて格納、表示
-        $result = [];
         $total_price = 0;
         $total_shipping_cost = 0;
-        //1つの商品ごとに分類、回す
+        //カート商品を配列を用いて格納、表示
+        $cart_item_lists = [];
         foreach($cart_items as $cart_item){
-            $item_id = $cart_item->item_id;
-            $item = $items[$item_id-1];
-
             //まず、商品ごとのリストを作る。
-            $list = [
+            $item = $cart_item->item;
+            $cart_item_list = [
                 'cart_id' => $cart_item->id,
                 'item_id' => $item->id,
                 'image' => $item->image,
@@ -41,19 +36,19 @@ class CartController extends Controller
             ];
 
             //そのリストを配列に格納
-            $result[] = $list;
+            $cart_item_lists[] = $cart_item_list;
             $total_price += $item->price * $cart_item->quantity;
-            $total_shipping_cost += $item->shipping_const;
+            $total_shipping_cost += $item->shipping_cost;
         }
         $payment_amount = $total_price + $total_shipping_cost;
 
         return view('cart.cartlist', compact(
             'cart_items',
+            'cart_items_count',
+            'cart_item_lists',
             'total_price',
             'total_shipping_cost',
             'payment_amount',
-            'result',
-            'cart_counts'
         ));
 
     }
