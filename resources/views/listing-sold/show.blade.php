@@ -13,22 +13,22 @@
         <p>商品名:{{$constracted_list['item_name']}}</p>
         <p>金額:{{$constracted_list['item_price']}}円</p>
         <p>注文日:{{$constracted_list['order_date']}}</p>
-        <p>購入者氏名:{{$constracted_list['order_name']}}</p>
+        <p>購入者氏名:{{$constracted_list['shipping_name']}}</p>
         <p>配送先:{{$constracted_list['shipping_address']}}</p>
         <p>電話番号:{{$constracted_list['shipping_phone_number']}}</p>
         <p>状態:</p>
-        <select name="status">
-            @foreach(\App\Models\OrderDetail::STATUS as $key => $val)
-                <option
-                    value="{{ $key }}"
-                    {{ $key == old('status', $constracted_list['order_status']) ? 'selected' : '' }}
-                >
-                  {{ $val['label'] }}
-                </option>
-            @endforeach
-        </select>
-      @endforeach
-      {{-- <a href="{{ route('list.edit', ['id'=>$item_detail->id]) }}">編集</a> --}}
-      <a href="{{ route('listing') }}">出品履歴一覧へ戻る</a>
+            {{--もしstatusが1だったら変更画面へ--}}
+            @if($constracted_list['order_status'] == 1)
+                <p>{{\App\Models\OrderDetail::STATUS[$constracted_list['order_status']]['label']}}</p>
+                <a href="{{ route('listing-sold.edit', ['order_detail_id'=>$constracted_list['order_detail_id']]) }}">商品状態変更</a>
+             @else
+                {{--もしstatusが1以外だったら<p>タグで表示するだけ--}}
+                <p>{{\App\Models\OrderDetail::STATUS[$constracted_list['order_status']]['label']}}</p>
+            @endif
+        <br>
+        -------------------------------------------
+        @endforeach
+      <br>
+      <a href="{{ route('listing-sold.index') }}">成約済み商品一覧へ戻る</a>
     </body>
 </html>

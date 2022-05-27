@@ -7,7 +7,7 @@
         <title>listing-sold</title>
     </head>
     <body>
-      <div>ここは未発送の成約済み商品一覧ページ</div>
+      <div>成約済み商品一覧</div>
       @foreach($order_list as $order)
       <a href="{{ route('listing-sold.show', ['id'=>$order['item_id']]) }}">
         <p>{{$order['item_image']}}</p>

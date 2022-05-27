@@ -99,3 +99,5 @@ Route::post('/listing/edited/{id}', [ListingController::class, 'edited'])->middl
 //成約済み商品
 Route::get('/listing-sold', [ListingSoldController::class, 'index'])->middleware(['auth'])->name('listing-sold.index'); //成約済み一覧
 Route::get('/listing-sold/{id}', [ListingSoldController::class, 'show'])->middleware(['auth'])->name('listing-sold.show'); //成約済み詳細
+Route::get('/listing-sold/edit/{order_detail_id}', [ListingSoldController::class, 'edit'])->middleware(['auth'])->name('listing-sold.edit'); //商品状態編集
+Route::post('/listing-sold/complete/{order_detail_id}', [ListingSoldController::class, 'complete'])->middleware(['auth'])->name('listing-sold.complete'); //商品状態編集実行
