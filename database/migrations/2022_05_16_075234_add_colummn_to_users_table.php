@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone_number', 20);
             $table->string('postal_code', 20);
             $table->string('address', 100);
+            $table->integer('payable_amount')->default(0);
         });
     }
 

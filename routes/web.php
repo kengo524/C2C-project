@@ -12,7 +12,7 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CartController;
-
+use App\Http\Controllers\CashPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,3 +95,8 @@ Route::post('/listing/edited/{id}', [ListingController::class, 'edited'])->middl
 // Route::get('/listing/delete/{id}', [ListingController::class, 'delete'])->middleware(['auth'])->name('list.delete'); //履歴削除確認
 // Route::post('/listing/deleted/{id}', [ListingController::class, 'deleted'])->middleware(['auth'])->name('list.deleted');
 
+//出金関係
+Route::get('/cashpayment/new', [CashPaymentController::class, 'new'])->middleware(['auth'])->name('cashpayment.new');
+Route::post('/cashpayment/confirm', [CashPaymentController::class, 'confirm'])->middleware(['auth'])->name('cashpayment.confirm');
+Route::post('/cashpayment/create', [CashPaymentController::class, 'create'])->middleware(['auth'])->name('cashpayment.create');
+Route::get('/cashpayment/complete', [CashPaymentController::class, 'complete'])->middleware(['auth'])->name('cashpayment.complete');

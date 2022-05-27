@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\ShippingAddress;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CreatePaymentinfo;
+use App\Http\Requests\CreateShippinginfo;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -126,7 +127,7 @@ class CartController extends Controller
     }
 
     //決済内容の入力
-    public function paymentinfo(Request $request){
+    public function paymentinfo(CreateShippinginfo $request){
         $request = $request->all();
         $card_brands = ["VISA", "JCB", "MasterCard"];
         return view('cart.paymentinfo', compact('card_brands','request'));
@@ -199,7 +200,7 @@ class CartController extends Controller
         ));
     }
 
-    //新規出品完了画面
+    //カート購入完了画面
     public function complete()
     {
         return view('cart.complete');

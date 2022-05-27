@@ -49,9 +49,6 @@
                       </div>
                     </form>
                 </div>
-
-
-                <a href="{{ route('cart.paymentinfo') }}">決済情報のご入力</a>
           </nav>
         </div>
       </div>
