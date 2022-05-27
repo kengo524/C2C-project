@@ -78,7 +78,7 @@ Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'cartlist'])->middleware(['auth'])->name('cart.cartlist');
 Route::get('/cart/shippinginfo', [CartController::class, 'shippinginfo'])->name('cart.shippinginfo');
-Route::get('/cart/paymentinfo', [CartController::class, 'paymentinfo'])->name('cart.paymentinfo');
+Route::post('/cart/paymentinfo', [CartController::class, 'paymentinfo'])->name('cart.paymentinfo');
 Route::post('/cart/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
 Route::get('/cart/complete', [CartController::class, 'complete'])->name('cart.complete');
 //注文確定時、在庫以上の購入ができないエラー表示

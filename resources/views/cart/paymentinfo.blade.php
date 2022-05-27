@@ -25,9 +25,10 @@
                     <p>{{ $message }}</p>
                 @endforeach
             </div>
-        @endif
+            @endif
             <form action="{{ route('cart.confirm') }}" method="post">
                 @csrf
+                <input type="hidden" class="form-control" name="shipping_date" id="shipping_date" value="{{ $request['shipping_date'] }}" />
                 <div class="form-group">
                 <label for="name">カード名義</label>
                 <p>半角英字（例:KENGO KONISHI）</p>

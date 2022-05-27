@@ -43,7 +43,6 @@ class OrderController extends Controller
     //注文DBへの保存処理+注文DB詳細への保存＋カートDB削除同時実行
     public function create(Request $request)
     {
-        $request = $request->all();
         $user_id = Auth::id();
         $cart_items = Cart::where('user_id', $user_id)->get();
         $items = Item::get();
@@ -66,6 +65,7 @@ class OrderController extends Controller
         $order->postal_code = $shipping_address->postal_code;
         $order->address = $shipping_address->address;
         $order->phone_number = $shipping_address->phone_number;
+        $order->shipping_date = $request->shipping_date;
         $order->save();
 
         //注文詳細DBの保存+商品在庫の調整
