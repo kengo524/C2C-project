@@ -43,7 +43,10 @@
             </div>
             <div>
                 <p>:::::::::::::::::::::::::</p>
-                <p>お届け予定日：{{ $shipping_date }}</p>
+                <div class="form-group">
+                    <label for="name">お届け予定日</label>
+                    <p>{{ $request['shipping_date'] }}</p>
+                </div>
             </div>
 
             <div class="panel-heading">決済情報入力</div>
@@ -70,6 +73,7 @@
 
                 <form action="{{ route('orders.create') }}" method="post">
                     @csrf
+                    <input type="hidden" class="form-control" name="shipping_date" id="shipping_date" value="{{ $request['shipping_date'] }}" />
                     <input type="hidden" class="form-control" name="total_price" id="total_price" value="{{ $total_price }}" />
                 <div class="text-right">
                 <button type="submit" class="btn btn-primary">注文確定へ</button>

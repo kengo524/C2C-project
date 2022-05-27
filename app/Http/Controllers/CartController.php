@@ -111,8 +111,7 @@ class CartController extends Controller
         $user = Auth::user();
         $user_id = Auth::id();
         $shipping_address = ShippingAddress::find($user_id);
-        $shipping_date = date("Y-m-d",strtotime("+6 day"));
-        //dd($shipping_address);
+        // $shipping_date = date("Y-m-d",strtotime("+6 day"));
 
         //発送情報未登録の場合は、自動的に入力画面で登録するよう設定。
         if($shipping_address == null){
@@ -121,16 +120,16 @@ class CartController extends Controller
             return view('cart.shippinginfo',compact(
                 'user',
                 'user_id',
-                'shipping_address',
-                'shipping_date',
+                'shipping_address'
             ));
         }
     }
 
     //決済内容の入力
-    public function paymentinfo(){
+    public function paymentinfo(Request $request){
+        $request = $request->all();
         $card_brands = ["VISA", "JCB", "MasterCard"];
-        return view('cart.paymentinfo', compact('card_brands'));
+        return view('cart.paymentinfo', compact('card_brands','request'));
     }
 
     //決済情報、カート内容、発送情報の呼び出し
@@ -139,7 +138,7 @@ class CartController extends Controller
         $login_user = Auth::user();
         $user_id = Auth::id();
         $shipping_address = ShippingAddress::find($user_id);
-        $shipping_date = date("Y-m-d",strtotime("+6 day"));
+        // $shipping_date = date("Y-m-d",strtotime("+6 day"));
         $cart_items = Cart::where('user_id', $user_id)->get();
         $items = Item::get();
 
@@ -196,7 +195,6 @@ class CartController extends Controller
             'payment_amount',
             'result',
             'shipping_address',
-            'shipping_date',
             'request'
         ));
     }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('postal_code');
             $table->string('address');
             $table->string('phone_number', 20);
+            $table->date('shipping_date');
         });
     }
 
