@@ -25,6 +25,10 @@ class OrdersTableSeeder extends Seeder
                 'price' => $price,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'shipping_name' => "ss.brother${i}",
+                'postal_code' => "1234567",
+                'address' => "兵庫県神戸市灘区${i}-${i}",
+                'phone_number' => "08011112222",
             ]);
         }
     }
