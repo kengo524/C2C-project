@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\ShippingAddress;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CreatePaymentinfo;
+use App\Http\Requests\CreateShippinginfo;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -59,8 +60,6 @@ class CartController extends Controller
     }
 
     // カート追加
-    //addする際、自分の商品は入れられないようvalidation設定（購入不可）。
-    //カートに追加する際、在庫以上追加できないよう設定。
     public function add(Request $request)
     {
         $user_id = Auth::id();
@@ -74,6 +73,11 @@ class CartController extends Controller
         //ログインしていないとカートへの追加はできない。
         if($user_id == null){
             return redirect()->route('register');
+        }
+
+        //自分の出品商品に対する追加制限
+        if($item->user_id == $user_id){
+            return redirect()->route('cart.user_error');
         }
 
         //カート商品追加の条件分岐（追加or増加）
@@ -126,13 +130,13 @@ class CartController extends Controller
     }
 
     //決済内容の入力
-    public function paymentinfo(Request $request){
+    public function paymentinfo(CreateShippinginfo $request){
         $request = $request->all();
         $card_brands = ["VISA", "JCB", "MasterCard"];
         return view('cart.paymentinfo', compact('card_brands','request'));
     }
 
-    //決済情報、カート内容、発送情報の呼び出し
+    //最終確認画面(決済情報、カート内容、発送情報の呼び出し)
     public function confirm(CreatePaymentinfo $request){
         $request = $request->all();
         $login_user = Auth::user();
@@ -141,26 +145,6 @@ class CartController extends Controller
         // $shipping_date = date("Y-m-d",strtotime("+6 day"));
         $cart_items = Cart::where('user_id', $user_id)->get();
         $items = Item::get();
-
-        // $total_price = 0;
-        // $total_shipping_cost = 0;
-        // foreach($cart_items as $cart_item){
-        //     $total_price += ($items[$cart_item->item_id]->price)*($cart_item->quantity);
-        //     $total_shipping_cost += $items[$cart_item->item_id]->shipping_const;
-        // }
-
-        // $payment_amount = $total_price + $total_shipping_cost;
-
-        // return view('cart.confirm', compact(
-        //     'request',
-        //     'cart_items',
-        //     'items',
-        //     'total_price',
-        //     'total_shipping_cost',
-        //     'payment_amount',
-        //     'shipping_addresses',
-        //     'shipping_date',
-        // ));
 
         $result = [];
         $total_price = 0;
@@ -173,7 +157,7 @@ class CartController extends Controller
             //まず、商品ごとのリストを作る。
             $list = [
                 'cart_id' => $cart_item->id,
-                'item' => $item,
+                'item_id' => $item->id,
                 'image' => $item->image,
                 'name' => $item->name,
                 'quantity' => $cart_item->quantity,
@@ -199,7 +183,7 @@ class CartController extends Controller
         ));
     }
 
-    //新規出品完了画面
+    //カート購入完了画面
     public function complete()
     {
         return view('cart.complete');
@@ -214,6 +198,16 @@ class CartController extends Controller
         return redirect()->route('cart.cartlist');
     }
 
+    // カート内商品の一括削除
+    public function alldelete()
+    {
+        $user_id = Auth::id();
+        $cartAll = Cart::where('user_id', $user_id)->get();
+        $cartAll->each->delete();
+
+        return redirect()->route('cart.cartlist');
+    }
+
     //注文確定時、在庫以上の購入ができないエラー表示
     public function quantity_error(){
         return view('cart.quantity_error');
@@ -222,5 +216,10 @@ class CartController extends Controller
     //カート追加時、在庫以上の追加が出来ないエラー表示
     public function add_error(){
         return view('cart.add_error');
+    }
+
+    //カート追加時、在庫以上の追加が出来ないエラー表示
+    public function user_error(){
+        return view('cart.user_error');
     }
 }

@@ -68,7 +68,7 @@ class OrderController extends Controller
         $order->shipping_date = $request->shipping_date;
         $order->save();
 
-        //注文詳細DBの保存+商品在庫の調整
+        //注文詳細DBの保存+商品在庫の調整+出品user売上計上
         foreach($cart_items as $cart_item){
             $orderDetail = New OrderDetail();
             $orderDetail->order_id = $order->id;
@@ -78,6 +78,10 @@ class OrderController extends Controller
             $orderDetail->save();
 
             Item::find($cart_item->item_id)->update(['stock_quantity' => ($items[$cart_item->item_id-1]->stock_quantity) - ($cart_item->quantity)]);
+
+            $listing_user = User::where('id', $items[$cart_item->item_id-1]->user_id)->first();
+            $listing_user->payable_amount += ($items[$cart_item->item_id-1]->price)*($cart_item->quantity);
+            $listing_user->update();
         }
 
         //カートDB削除
