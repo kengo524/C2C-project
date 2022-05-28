@@ -27,6 +27,7 @@
                         @endforeach
                     </div>
                 @endif
+                <button type="button" class="btn btn-primary" onclick="location.href='{{ route('cashpayment.index') }}'">過去の出金履歴一覧</button>
                 <div><p>現在の出金可能金額：{{ $user_payable_amount }}円</p></div>
 
               <form action="{{ route('cashpayment.confirm') }}" method="post">

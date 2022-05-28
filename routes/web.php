@@ -75,17 +75,19 @@ Route::get('/orders/{id}', [OrderController::class, 'show'])->middleware(['auth'
 Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 
 //カート処理のルート
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'cartlist'])->middleware(['auth'])->name('cart.cartlist');
-Route::get('/cart/shippinginfo', [CartController::class, 'shippinginfo'])->name('cart.shippinginfo');
-Route::post('/cart/paymentinfo', [CartController::class, 'paymentinfo'])->name('cart.paymentinfo');
-Route::post('/cart/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
-Route::get('/cart/complete', [CartController::class, 'complete'])->name('cart.complete');
-//注文確定時、在庫以上の購入ができないエラー表示
-Route::get('/cart/quantity_error', [CartController::class, 'quantity_error'])->name('cart.quantity_error');
-//カート追加時、在庫以上の追加が出来ないエラー表示
-Route::get('/cart/add_error', [CartController::class, 'add_error'])->name('cart.add_error');
-Route::post('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+Route::prefix('cart')->group(function (){
+    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/', [CartController::class, 'cartlist'])->middleware(['auth'])->name('cart.cartlist');
+    Route::get('/shippinginfo', [CartController::class, 'shippinginfo'])->name('cart.shippinginfo');
+    Route::post('/paymentinfo', [CartController::class, 'paymentinfo'])->name('cart.paymentinfo');
+    Route::post('/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
+    Route::get('/complete', [CartController::class, 'complete'])->name('cart.complete');
+    Route::get('/quantity_error', [CartController::class, 'quantity_error'])->name('cart.quantity_error');
+    Route::get('/add_error', [CartController::class, 'add_error'])->name('cart.add_error');
+    Route::get('/user_error', [CartController::class, 'user_error'])->name('cart.user_error');
+    Route::post('/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+    Route::get('/delete', [CartController::class, 'alldelete'])->name('cart.alldelete');
+});
 
 //出品履歴
 Route::get('/listing', [ListingController::class, 'index'])->middleware(['auth'])->name('listing'); //履歴一覧
@@ -96,7 +98,9 @@ Route::post('/listing/edited/{id}', [ListingController::class, 'edited'])->middl
 // Route::post('/listing/deleted/{id}', [ListingController::class, 'deleted'])->middleware(['auth'])->name('list.deleted');
 
 //出金関係
+Route::get('/cashpayment', [CashPaymentController::class, 'index'])->middleware(['auth'])->name('cashpayment.index');
 Route::get('/cashpayment/new', [CashPaymentController::class, 'new'])->middleware(['auth'])->name('cashpayment.new');
 Route::post('/cashpayment/confirm', [CashPaymentController::class, 'confirm'])->middleware(['auth'])->name('cashpayment.confirm');
 Route::post('/cashpayment/create', [CashPaymentController::class, 'create'])->middleware(['auth'])->name('cashpayment.create');
 Route::get('/cashpayment/complete', [CashPaymentController::class, 'complete'])->middleware(['auth'])->name('cashpayment.complete');
+Route::get('/cashpayment/over_error', [CashPaymentController::class, 'over_error'])->middleware(['auth'])->name('cashpayment.over_error');

@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Auth;
 
 class CashPaymentController extends Controller
 {
+    //出金履歴一覧
+    public function index()
+    {
+        $user_id = Auth::id();
+        $cashpayment_history = CashPayment::where('user_id', $user_id)->get();
+
+        return view('cashpayment.index', compact(
+            'cashpayment_history'
+        ));
+    }
+
     //出金申請フォーム
     public function new()
     {
@@ -34,6 +45,11 @@ class CashPaymentController extends Controller
         $user_payable_amount = $user['payable_amount'];
         $user_bank_info = BankAccount::find($user_id);
         $balance_amount = $user_payable_amount - $request['payment_amount'];
+
+        if($request['payment_amount'] > $user_payable_amount){
+            return redirect()->route('cashpayment.over_error');
+        }else{
+        }
 
         return view('cashpayment.confirm', compact(
             'user_id',
@@ -73,5 +89,11 @@ class CashPaymentController extends Controller
     public function complete()
     {
         return view('cashpayment.complete');
+    }
+
+    //出金額＞引出可能額の場合
+    public function over_error()
+    {
+        return view('cashpayment.over_error');
     }
 }
