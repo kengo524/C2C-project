@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Session;
 
 class RegisteredUserController extends Controller
 {
@@ -41,26 +42,11 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            // 'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-        // $email = $request->email;
-        // $password = $request->password;
 
         $inputs = $request->all();
-        // dd($inputs);
-        // $user = User::create([
-        //     // 'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
-
-        // event(new Registered($user));
-
-        // Auth::login($user);
-
-        // return redirect(RouteServiceProvider::HOME);
 
          //ユーザ情報登録画面を表示するviewへ
         return view('auth.usersregister', [
@@ -71,26 +57,17 @@ class RegisteredUserController extends Controller
     //ユーザ情報登録で入力されている値を保持
     public function usersstore(Request $request)
     {
-        // $request->validate([
-        //     // 'name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        // ]);
+        if(!(strlen($request->phone_number) == 10 or 11)){
+            Session::flash('flash_message', '電話番号はハイフンなしでのご入力をお願いします。');
+            return view('auth.usersregister',compact('request'));
+        };
+        if(!(strlen($request->postal_code) == 7)){
+            Session::flash('flash_message', '郵便番号はハイフンなしでの7桁にてご入力をお願いします。');
+            return view('auth.usersregister',compact('request'));
+        };
 
         $inputs = $request->all();
-        // dd($inputs);
 
-        // $user = User::create([
-        //     // 'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password),
-        // ]);
-
-        // event(new Registered($user));
-
-        // Auth::login($user);
-
-        // return redirect(RouteServiceProvider::HOME);
         //確認画面を表示するviewへ
         return view('auth.confirmregister',[
             'request' => $inputs,
@@ -98,25 +75,14 @@ class RegisteredUserController extends Controller
     }
 
     //ユーザ情報登録確認
-    public function confirm(Request $request)
-    {
-        // // Bladeで使う変数
-        // $hash = array(
-        //     'request' => $request,
-        //     'email' => 'email',
-        //     'password' => 'password',
-        //     'name' => 'name',
-        //     'nickname' => 'nickname',
-        //     'postalcode' => 'postalcode',
-        //     'address' => 'address',
-        // );
-        // return view('confirm')->with($hash);
-        $inputs = $request->all();
+    // public function confirm(Request $request)
+    // {
+    //     $inputs = $request->all();
 
-        return view('auth.confirmregister',[
-            'request' => $inputs,
-        ]);
-    }
+    //     return view('auth.confirmregister',[
+    //         'request' => $inputs,
+    //     ]);
+    // }
 
         //データベースにユーザ情報を保存
         public function save(Request $request)
