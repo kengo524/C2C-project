@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.form')
 
-        <title>registerusers</title>
-    </head>
-    <body>
-      <div>お届け先情報を変更しました</div>
-      <a href="{{ route('mypage') }}">マイページへ戻る</a>
-    </body>
-</html>
+@section('form')
+    <nav class="panel panel-default">
+        <div class="panel-heading">完了</div>
+        <div class="panel-body">
+            お届け先情報を変更しました。
+        </div>
+        <a href="{{ route('mypage') }}">マイページへ</a>
+      </nav>
+@endsection
