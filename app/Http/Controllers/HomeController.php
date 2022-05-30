@@ -29,7 +29,7 @@ class HomeController extends Controller
             $items = $query->paginate(20);
         }
         else{
-            $items = Item::paginate(20);
+            $items = Item::latest()->paginate(20);
         }
 
         return view('home.index', compact('items','categories'));

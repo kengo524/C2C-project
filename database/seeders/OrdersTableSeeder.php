@@ -20,6 +20,7 @@ class OrdersTableSeeder extends Seeder
         for($i = 0; $i < 10; $i++){
             $user_id =  rand(1,3);
             $price = rand(1000,50000);
+            $num = rand(6,10);
             DB::table('orders')->insert([
                 'user_id' => $user_id,
                 'price' => $price,
@@ -29,6 +30,7 @@ class OrdersTableSeeder extends Seeder
                 'postal_code' => "1234567",
                 'address' => "兵庫県神戸市灘区${i}-${i}",
                 'phone_number' => "08011112222",
+                'shipping_date' => Carbon::now()->addDay($num),
             ]);
         }
     }
