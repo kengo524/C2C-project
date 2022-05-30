@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>order_details</title>
-    </head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>C2C App</title>
+        <link rel="stylesheet" href="/css/styles.css">
+      </head>
     <body>
+        <header>
+            <nav class="my-navbar">
+              <a class="my-navbar-brand" href="/">C2C App</a>
+            </nav>
+          </header>
       <div class="container">
         <div class="row">
           <div class="col-12">
-              <div>ここはホームページ</div>
               @auth
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -48,7 +53,7 @@
               <div style="width:23%;box-sizing: border-box; margin:20px 1%; border: solid 2px gray; border-radius: 5px;">
                 <a href="{{ route('item_detail',[ 'id' => $item->id]) }}" style="text-decoration: none; color:gray">
                   <div style="width: 100%; height: 200px;">
-                    <img class="logo" src="{{ asset("storage/items/{$item->id}/sample1.jpg") }}" width="100%" height="100%">
+                    <img class="logo" src="{{ asset("storage/items/{$item->id}/sample1.jpg") }}" width="auto" height="100%"  style="display: block; margin: auto;">
                   </div>
                   <div style="padding: 10px;">
                     <!-- <div style="padding-bottom: 5px">
