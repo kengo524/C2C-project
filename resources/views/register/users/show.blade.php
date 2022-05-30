@@ -44,11 +44,11 @@
         <div class="text-right">
             <button type="submit" class="btn btn-primary">変更する</button>
           </div>
+        </form>
           <div>
             <a href="{{ route('mypage') }}">マイページへ戻る</a>
           </div>
     </div>
 </nav>
 @endsection
-
 
