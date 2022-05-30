@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterBankEditController;
 use App\Http\Controllers\RegisterShippingAddressEditController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\ListingSoldController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
@@ -97,6 +98,12 @@ Route::post('/listing/edited/{id}', [ListingController::class, 'edited'])->middl
 // Route::get('/listing/delete/{id}', [ListingController::class, 'delete'])->middleware(['auth'])->name('list.delete'); //履歴削除確認
 // Route::post('/listing/deleted/{id}', [ListingController::class, 'deleted'])->middleware(['auth'])->name('list.deleted');
 
+//成約済み商品
+Route::get('/listing-sold', [ListingSoldController::class, 'index'])->middleware(['auth'])->name('listing-sold.index'); //成約済み一覧
+Route::get('/listing-sold/{id}', [ListingSoldController::class, 'show'])->middleware(['auth'])->name('listing-sold.show'); //成約済み詳細
+Route::get('/listing-sold/edit/{order_detail_id}', [ListingSoldController::class, 'edit'])->middleware(['auth'])->name('listing-sold.edit'); //商品状態編集
+Route::post('/listing-sold/complete/{order_detail_id}', [ListingSoldController::class, 'complete'])->middleware(['auth'])->name('listing-sold.complete'); //商品状態編集実行
+
 //出金関係
 Route::get('/cashpayment', [CashPaymentController::class, 'index'])->middleware(['auth'])->name('cashpayment.index');
 Route::get('/cashpayment/new', [CashPaymentController::class, 'new'])->middleware(['auth'])->name('cashpayment.new');
@@ -104,3 +111,4 @@ Route::post('/cashpayment/confirm', [CashPaymentController::class, 'confirm'])->
 Route::post('/cashpayment/create', [CashPaymentController::class, 'create'])->middleware(['auth'])->name('cashpayment.create');
 Route::get('/cashpayment/complete', [CashPaymentController::class, 'complete'])->middleware(['auth'])->name('cashpayment.complete');
 Route::get('/cashpayment/over_error', [CashPaymentController::class, 'over_error'])->middleware(['auth'])->name('cashpayment.over_error');
+
