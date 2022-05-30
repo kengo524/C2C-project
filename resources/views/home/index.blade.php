@@ -34,6 +34,11 @@
         <input type="submit" value="検索" class="btn btn-info">
       </form>
 
+      {{-- <form action="{{route('homepage')}}">
+        <button type="submit" name="sort" value="1">新着順</button>
+        <button type="submit" name="sort" value="">あいうえお順</button>
+      </form> --}}
+
       @foreach($items as $item)
       <a href="{{ route('item_detail',[ 'id' => $item->id]) }}">
         <img class="logo" src="{{ asset("storage/items/{$item->id}/sample1.jpg") }}" width="100" height="100"><br>
