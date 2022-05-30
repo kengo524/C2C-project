@@ -22,7 +22,7 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // //購入履歴一覧（ログインユーザが購入した商品全てを表示）
         $login_user_id = auth()->user()->id;
@@ -58,19 +58,20 @@ class OrderController extends Controller
             }
         }
 
-        $query =  DB::table('order_details')->whereIn('id', $order_detail_ids);
+        $orderPaginate = collect($order_lists);
 
-        // SELECT * FROM stores WHERE area_id IN (54,129,302,･･････);
-        $pages = $query->paginate(20);
-        // dd($pages);
-        //ページネート追加
-        // $data = $this->paginate($models,2,$request->id,array());
-        // $pages = collect($clients)
-        // $pages = new LengthAwarePaginator($order_lists , $all_pages_num, 20, 1, array('path'=>'/order.index'));
+        $paginate_list = new LengthAwarePaginator(
+            $orderPaginate->forPage($request->page, 20),
+            count($orderPaginate),
+            20,
+            $request->page,
+            ['path' => $request->url()]
+        );
 
-        // $page = array_slice($order_lists, 0, 20);
-        // $pages = new Paginator($page, 20, null, array('path'=>'order.index'));
-        return view('order.index', compact('order_lists', 'pages'));
+        return view('order.index', [
+            'order_lists' => $order_lists,
+            'paginate_list' => $paginate_list
+        ]);
 
 
         // ↓これって詳細ページでやることやん！
