@@ -14,14 +14,15 @@
 
             <!-- Email-->
             <div class="form-group">
-                <label for="email">email</label>
+                <label for="email">メールアドレス</label>
                 <p>{{ $request['email'] }}</p>
                 <input type="hidden" class="form-control" name="email" id="email" value="{{ $request['email'] }}"/>
+                {{-- <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required /> --}}
             </div>
 
             <!-- Password-->
             <div class="form-group">
-                <label for="password">password</label>
+                <label for="password">パスワード</label>
                 {{-- <p>{{ $request['password'] }}</p> --}}
                 <p>●●●●●●●●</p>
                 <input type="hidden" class="form-control" name="password" id="password" value="{{ $request['password']}}"/>
@@ -29,35 +30,35 @@
 
             <!-- Name-->
             <div class="form-group">
-                <label for="name">name</label>
+                <label for="name">氏名</label>
                 <p>{{ $request['name'] }}</p>
                 <input type="hidden" class="form-control" name="name" id="name" value="{{ $request['name'] }}"/>
             </div>
 
             <!-- NickName-->
             <div class="form-group">
-                <label for="nick_name">nickname</label>
+                <label for="nick_name">ニックネーム</label>
                 <p>{{ $request['nick_name'] }}</p>
                 <input type="hidden" class="form-control" name="nick_name" id="nick_name" value="{{ $request['nick_name'] }}"/>
             </div>
 
             <!-- PhoneNumber-->
             <div class="form-group">
-                <label for="phone_number">phonenumber</label>
+                <label for="phone_number">電話番号</label>
                 <p>{{ $request['phone_number'] }}</p>
                 <input type="hidden" class="phone_number" name="phone_number" id="phone_number" value="{{ $request['phone_number'] }}"/>
             </div>
 
             <!-- PostalCode-->
             <div class="form-group">
-                <label for="postal_code">postalcode</label>
+                <label for="postal_code">郵便番号</label>
                 <p>{{ $request['postal_code'] }}</p>
                 <input type="hidden" class="form-control" name="postal_code" id="postal_code" value="{{ $request['postal_code'] }}"/>
             </div>
 
             <!-- Address-->
             <div class="form-group">
-                <label for="address">address</label>
+                <label for="address">住所</label>
                 <p>{{ $request['address'] }}</p>
                 <input type="hidden" class="form-control" name="address" id="address" value="{{ $request['address'] }}"/>
             </div>
