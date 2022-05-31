@@ -31,7 +31,7 @@ class RegisterBankEditController extends Controller
     {
         // リクエストされた ID でデータを取得(編集対象)
         $login_user_id = auth()->user()->id;
-        $bank_account = BankAccount::find($login_user_id);
+        $bank_account = BankAccount::where('user_id',$login_user_id)->first();
 
         // 編集対象のデータにデータの入力値を詰めてDBに保存する
         $bank_account->name = $request->name;
