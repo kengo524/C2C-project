@@ -34,8 +34,8 @@
 
             <!-- PhoneNumber -->
             <div>
-                <x-label for="phone_number" :value="__('電話番号')" />
-                <p>※ハイフン(-)なしでご入力ください。</p>
+                <x-label for="phone_number" :value="__('携帯電話番号')" />
+                <p>※ハイフン(-)なしで11桁にてご入力ください。</p>
                 <x-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" required autofocus />
             </div>
 
