@@ -18,12 +18,14 @@
       <div class="row">
         <div class="col col-md-offset-3 col-md-6">
           <nav class="panel panel-default">
-            <div class="panel-heading">完了</div>
+            <div class="panel-heading">完了画面</div>
             <div class="panel-body">
-              <p>出品商品情報を変更しました</p>
+                <p>出金申請が完了しました。</p>
+                <p>※資金の入金は2~3営業日以内に行われます。</p>
+                <p>ありがとうございました。</p>
             </div>
-            <a href="{{ route('mypage') }}">マイページへ戻る</a>
-        </nav>
+            <a href="{{ route('mypage') }}">マイページへ</a>
+          </nav>
         </div>
       </div>
     </div>

@@ -17,13 +17,7 @@
     <div class="container">
       <div class="row">
         <div class="col col-md-offset-3 col-md-6">
-          <nav class="panel panel-default">
-            <div class="panel-heading">完了</div>
-            <div class="panel-body">
-              <p>出品商品情報を変更しました</p>
-            </div>
-            <a href="{{ route('mypage') }}">マイページへ戻る</a>
-        </nav>
+              @yield('form')
         </div>
       </div>
     </div>

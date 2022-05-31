@@ -27,15 +27,14 @@ class OrderController extends Controller
         // //購入履歴一覧（ログインユーザが購入した商品全てを表示）
         $login_user_id = auth()->user()->id;
         //ログインしているユーザが購入した商品(つまりこの情報が表示されればok)
-        // $orders = Order::where('user_id', $login_user_id)->get();
         $orders = Order::where('user_id', $login_user_id)->get();
 
         $order_lists = [];
-        $order_detail_ids = [];
         foreach($orders as $order){
             //Viewに渡すのに必要な情報を得るためにテーブルを連携させる
             $order_id = $order->id;
             $order_details = OrderDetail::where('order_id', $order_id)->get();
+            $order_ids[] = $order->id;
             foreach($order_details as $order_detail){
                 $item_id = $order_detail->item_id;
                 $items = Item::find($item_id);
@@ -53,15 +52,11 @@ class OrderController extends Controller
                     'order_detail_status' => $order_detail['status']
                 ];
             $order_lists[] = $order_data;
-            // dd($order_data['order_detail_id']);
-            $order_detail_ids[] = $order_detail->id;
             }
         }
 
-        //ページネート追加
-        //配列をコレクションに変換
         $orderPaginate = collect($order_lists);
-        //1ページに20件表示
+
         $paginate_list = new LengthAwarePaginator(
             $orderPaginate->forPage($request->page, 20),
             count($orderPaginate),
@@ -69,11 +64,11 @@ class OrderController extends Controller
             $request->page,
             ['path' => $request->url()]
         );
+
         return view('order.index', [
             'order_lists' => $order_lists,
             'paginate_list' => $paginate_list
         ]);
-
     }
 
     /**
@@ -144,7 +139,6 @@ class OrderController extends Controller
     //注文DBへの保存処理+注文DB詳細への保存＋カートDB削除同時実行
     public function create(Request $request)
     {
-        $request = $request->all();
         $user_id = Auth::id();
         $cart_items = Cart::where('user_id', $user_id)->get();
         $items = Item::get();
@@ -167,9 +161,10 @@ class OrderController extends Controller
         $order->postal_code = $shipping_address->postal_code;
         $order->address = $shipping_address->address;
         $order->phone_number = $shipping_address->phone_number;
+        $order->shipping_date = $request->shipping_date;
         $order->save();
 
-        //注文詳細DBの保存+商品在庫の調整
+        //注文詳細DBの保存+商品在庫の調整+出品user売上計上
         foreach($cart_items as $cart_item){
             $orderDetail = New OrderDetail();
             $orderDetail->order_id = $order->id;
@@ -179,6 +174,10 @@ class OrderController extends Controller
             $orderDetail->save();
 
             Item::find($cart_item->item_id)->update(['stock_quantity' => ($items[$cart_item->item_id-1]->stock_quantity) - ($cart_item->quantity)]);
+
+            $listing_user = User::where('id', $items[$cart_item->item_id-1]->user_id)->first();
+            $listing_user->payable_amount += ($items[$cart_item->item_id-1]->price)*($cart_item->quantity);
+            $listing_user->update();
         }
 
         //カートDB削除

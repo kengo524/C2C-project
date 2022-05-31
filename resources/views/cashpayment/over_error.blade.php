@@ -18,12 +18,13 @@
       <div class="row">
         <div class="col col-md-offset-3 col-md-6">
           <nav class="panel panel-default">
-            <div class="panel-heading">完了</div>
+            <div class="panel-heading">ご注意！</div>
             <div class="panel-body">
-              <p>出品商品情報を変更しました</p>
+              <p>誠に申し訳ございませんが、引出可能金額以上の出金は出来ません。</p>
+              <p>大変恐れ入りますが、一度マイページへお戻りください。</p>
             </div>
-            <a href="{{ route('mypage') }}">マイページへ戻る</a>
-        </nav>
+            <a href="{{ route('mypage') }}">マイページへ</a>
+          </nav>
         </div>
       </div>
     </div>

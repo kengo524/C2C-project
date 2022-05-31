@@ -33,19 +33,19 @@
                 </form>
                 <p>**********************</p>
                 @endforeach
+                @if($cart_counts == 0)
+                <h3>カートには何も入っておりません。</h3>
+                @else
+                <a href="{{ route('cart.alldelete') }}">カート内一括削除</a>
                 <div>
                     <p>-----------------------------------------------------------</p>
                     <p>合計：{{ $total_price }}円</p>
                     <p>送料：{{ $total_shipping_cost }}円</p>
                     <p>お支払い金額：{{ $payment_amount }}円</p>
                 </div>
-
-                <a href="{{ route('homepage') }}">買い物を続ける</a>
-                @if($cart_counts == 0)
-                <h3>カートには何も入っておりません。</h3>
-                @else
                 <a href="{{ route('cart.shippinginfo') }}">購入手続きへ</a>
                 @endif
+                <a href="{{ route('homepage') }}">買い物を続ける</a>
           </nav>
         </div>
       </div>

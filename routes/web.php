@@ -13,7 +13,7 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CartController;
-
+use App\Http\Controllers\CashPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,17 +78,19 @@ Route::post('/orders/complete/{order_detail_id}', [OrderController::class, 'comp
 Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 
 //カート処理のルート
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::get('/cart', [CartController::class, 'cartlist'])->middleware(['auth'])->name('cart.cartlist');
-Route::get('/cart/shippinginfo', [CartController::class, 'shippinginfo'])->name('cart.shippinginfo');
-Route::get('/cart/paymentinfo', [CartController::class, 'paymentinfo'])->name('cart.paymentinfo');
-Route::post('/cart/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
-Route::get('/cart/complete', [CartController::class, 'complete'])->name('cart.complete');
-//注文確定時、在庫以上の購入ができないエラー表示
-Route::get('/cart/quantity_error', [CartController::class, 'quantity_error'])->name('cart.quantity_error');
-//カート追加時、在庫以上の追加が出来ないエラー表示
-Route::get('/cart/add_error', [CartController::class, 'add_error'])->name('cart.add_error');
-Route::post('/cart/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+Route::prefix('cart')->group(function (){
+    Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/', [CartController::class, 'cartlist'])->middleware(['auth'])->name('cart.cartlist');
+    Route::get('/shippinginfo', [CartController::class, 'shippinginfo'])->name('cart.shippinginfo');
+    Route::post('/paymentinfo', [CartController::class, 'paymentinfo'])->name('cart.paymentinfo');
+    Route::post('/confirm', [CartController::class, 'confirm'])->name('cart.confirm');
+    Route::get('/complete', [CartController::class, 'complete'])->name('cart.complete');
+    Route::get('/quantity_error', [CartController::class, 'quantity_error'])->name('cart.quantity_error');
+    Route::get('/add_error', [CartController::class, 'add_error'])->name('cart.add_error');
+    Route::get('/user_error', [CartController::class, 'user_error'])->name('cart.user_error');
+    Route::post('/delete/{id}', [CartController::class, 'delete'])->name('cart.delete');
+    Route::get('/delete', [CartController::class, 'alldelete'])->name('cart.alldelete');
+});
 
 //出品履歴
 Route::get('/listing', [ListingController::class, 'index'])->middleware(['auth'])->name('listing'); //履歴一覧
@@ -103,3 +105,12 @@ Route::get('/listing-sold', [ListingSoldController::class, 'index'])->middleware
 Route::get('/listing-sold/{id}', [ListingSoldController::class, 'show'])->middleware(['auth'])->name('listing-sold.show'); //成約済み詳細
 Route::get('/listing-sold/edit/{order_detail_id}', [ListingSoldController::class, 'edit'])->middleware(['auth'])->name('listing-sold.edit'); //商品状態編集
 Route::post('/listing-sold/complete/{order_detail_id}', [ListingSoldController::class, 'complete'])->middleware(['auth'])->name('listing-sold.complete'); //商品状態編集実行
+
+//出金関係
+Route::get('/cashpayment', [CashPaymentController::class, 'index'])->middleware(['auth'])->name('cashpayment.index');
+Route::get('/cashpayment/new', [CashPaymentController::class, 'new'])->middleware(['auth'])->name('cashpayment.new');
+Route::post('/cashpayment/confirm', [CashPaymentController::class, 'confirm'])->middleware(['auth'])->name('cashpayment.confirm');
+Route::post('/cashpayment/create', [CashPaymentController::class, 'create'])->middleware(['auth'])->name('cashpayment.create');
+Route::get('/cashpayment/complete', [CashPaymentController::class, 'complete'])->middleware(['auth'])->name('cashpayment.complete');
+Route::get('/cashpayment/over_error', [CashPaymentController::class, 'over_error'])->middleware(['auth'])->name('cashpayment.over_error');
+

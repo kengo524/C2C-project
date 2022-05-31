@@ -18,12 +18,13 @@
       <div class="row">
         <div class="col col-md-offset-3 col-md-6">
           <nav class="panel panel-default">
-            <div class="panel-heading">完了</div>
+            <div class="panel-heading">ご注意</div>
             <div class="panel-body">
-              <p>出品商品情報を変更しました</p>
+              <p>誠に申し訳ございませんが、ご自身でご出品された商品はカート追加出来ません。</p>
+              <p>大変恐れ入りますが、一度トップページへお戻りください。</p>
             </div>
-            <a href="{{ route('mypage') }}">マイページへ戻る</a>
-        </nav>
+            <a href="{{ route('homepage') }}">トップページへ</a>
+          </nav>
         </div>
       </div>
     </div>

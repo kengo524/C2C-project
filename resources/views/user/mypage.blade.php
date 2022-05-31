@@ -13,7 +13,7 @@
       <a href="{{ route('orders.index') }}">購入履歴</a>
       <a href="{{ route('listing') }}">出品履歴</a>
       <a href="{{ route('listing-sold.index') }}">成約済み商品一覧</a>
-      <a href="{{ route('mypage') }}">出金</a>
+      <a href="{{ route('cashpayment.new') }}">出金</a>
       <a href="{{ route('register.edit', ['id'=>$user->id]) }}">ユーザー情報変更</a>
     </body>
 </html>

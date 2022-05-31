@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         for ($i = 1; $i < 4; $i++){
+            $payable_amount = rand(1000,50000);
             DB::table('users')->insert([
                 'name' => "test_user_${i}",
                 'email' => "test_user_${i}@email.com",
@@ -28,6 +29,7 @@ class UsersTableSeeder extends Seeder
                 'postal_code' => "000-0000",
                 'address' => "東京都恵比寿${i}丁目${i}－${i}",
                 'nick_name' => "test_user_${i}くん",
+                'payable_amount' => $payable_amount,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);

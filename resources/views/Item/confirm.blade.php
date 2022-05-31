@@ -24,7 +24,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="image">商品画像:</label>
-                    <img src="data:image/jpg;base64, {{ $imageText }}" width="200" height="200">
+                    <img src="data:image/jpg;base64, {{ $imageText }}" width="auto" height="200">
                     {{-- <p>{{ $image }}</p> --}}
                         {{-- @foreach($images as $ image)
                             <img src"{{ Storage::url($image->image) }}">

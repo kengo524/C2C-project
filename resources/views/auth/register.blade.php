@@ -16,15 +16,15 @@
 
             <!-- Email Address -->
             <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+                <x-label for="email" :value="__('メールアドレス')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
+                <x-label for="password" :value="__('パスワード')" />
+                <p>8文字以上でご設定ください。</p>
                 <x-input id="password" class="block mt-1 w-full"
                                 type="password"
                                 name="password"
@@ -33,7 +33,7 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-label for="password_confirmation" :value="__('確認用パスワード')" />
 
                 <x-input id="password_confirmation" class="block mt-1 w-full"
                                 type="password"
@@ -42,7 +42,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('既にユーザーIDを保有している方はこちら') }}
                 </a>
 
                 <x-button class="ml-4">
