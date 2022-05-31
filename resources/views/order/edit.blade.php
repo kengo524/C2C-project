@@ -7,7 +7,7 @@
         <title>order_details</title>
     </head>
     <body>
-      <div>ここは購入履歴詳細ページ</div>
+      <div>ここは商品状態変更ページ</div>
       @foreach($order_lists as $order_list)
         <p><img class="logo" src="{{ asset("storage/items/{$order_list['item_image']}/sample1.jpg") }}" width="100" height="100"><br></p>
         {{-- <p>注文明細ID：{{$order_list['order_detail_id']}}</p>
@@ -17,16 +17,16 @@
         <p>小計：{{$order_list['order_detail_price']}}</p>
         <p>注文日：{{$order_list['order_date']}}</p>
         <p>状態：</p>
-            {{--もしstatusが2だったら変更画面へ--}}
-            @if($order_list['order_status'] == 2)
-                <p>{{\App\Models\OrderDetail::STATUS[$order_list['order_status']]['label']}}</p>
-                <a href="{{ route('orders.edit', ['order_detail_id'=>$order_list['order_detail_id']]) }}">商品状態変更</a>
-            @else
-                {{--もしstatusが2以外だったら<p>タグで表示するだけ--}}
-                <p>{{\App\Models\OrderDetail::STATUS[$order_list['order_status']]['label']}}</p>
-            @endif
+        <form method="POST" action="{{ route('orders.complete', ['order_detail_id'=>$order_list['order_detail_id']]) }}">
+            @csrf
+            <select name="status">
+                <option value="2"selected='selected'>商品発送中</option>
+                <option value="3">商品到着済み</option>
+            </select><br>
+            <input type="submit" value="変更する">
+        </form>
       @endforeach
       <br>
-      <a href="{{ route('orders.index') }}">購入履歴一覧へ戻る</a>
+      <a href="{{ route('orders.show', ['order_detail_id'=>$order_list['order_detail_id']]) }}">購入履歴詳細へ戻る</a>
     </body>
 </html>

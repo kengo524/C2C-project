@@ -8,20 +8,22 @@
     </head>
     <body>
       <div>ここは購入履歴一覧ページ</div>
-      @foreach($order_lists as $order_list)
-      {{-- <a href="{{ route('order', ['id'=>$order_list['item_id']]) }}"> --}}
-        <p>注文ID：{{$order_list['order_id']}}</p>
+      @foreach($paginate_list as $order_list)
+      <a href="{{ route('orders.show', ['order_detail_id'=>$order_list['order_detail_id']]) }}">
+        {{-- <p>注文明細ID：{{$order_list['order_detail_id']}}</p>
+        <p>注文ID：{{$order_list['order_id']}}</p> --}}
         <p>{{$order_list['item_image']}}</p>
         <p>商品名：{{$order_list['item_name']}}</p>
         <p>金額：{{$order_list['item_price']}}</p>
         <p>数量：{{$order_list['order_detail_quantity']}}</p>
         <p>小計：{{$order_list['order_detail_price']}}</p>
+        <p>状態：{{\App\Models\OrderDetail::STATUS[$order_list['order_detail_status']]['label']}}</p>
         <br>
-        ------------------------------------------------------
-      {{-- </a> --}}
+      </a>
+      ------------------------------------------------------
       @endforeach
       {{-- {{ $pages->links() }} --}}
-      {{ $pages->links('vendor.pagination.default') }}
+      {{ $paginate_list->links('vendor.pagination.default') }}
       <a href="{{ route('mypage') }}">マイページへ戻る</a>
     </body>
 </html>

@@ -10,7 +10,7 @@
       <div>ここはマイページ</div>
       <a href="{{ route('homepage') }}">トップページへ</a>
       <a href="{{ route('item.create') }}">新規出品</a>
-      <a href="{{ route('orders') }}">購入履歴</a>
+      <a href="{{ route('orders.index') }}">購入履歴</a>
       <a href="{{ route('listing') }}">出品履歴</a>
       <a href="{{ route('listing-sold.index') }}">成約済み商品一覧</a>
       <a href="{{ route('mypage') }}">出金</a>

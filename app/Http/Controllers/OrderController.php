@@ -22,16 +22,13 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // //購入履歴一覧（ログインユーザが購入した商品全てを表示）
         $login_user_id = auth()->user()->id;
         //ログインしているユーザが購入した商品(つまりこの情報が表示されればok)
         // $orders = Order::where('user_id', $login_user_id)->get();
-        $orders = Order::where('user_id', $login_user_id)->paginate(20);
-        //$all_
-        $all_pages_num = 0;
-        $all_pages_num = count($orders);
+        $orders = Order::where('user_id', $login_user_id)->get();
 
         $order_lists = [];
         $order_detail_ids = [];
@@ -46,69 +43,37 @@ class OrderController extends Controller
                 //Viewに渡すもの
                 $order_data = [
                     'order_id' => $order['id'],
-                    'item_id' => $items['id'], //商品id itemsテーブル
-                    'item_image' => $items['image'],// 商品画像　itemsテーブル
-                    'item_name' => $items['name'],// 商品名 itemsテーブル
-                    'item_price' => $items['price'],// 金額 itemsテーブル
-                    'order_detail_quantity' => $order_detail['quantity'],// 数量 order_detailsテーブル
-                    'order_detail_price' => $order_detail['price']// 小計 order_detailsテーブル
+                    'order_detail_id' => $order_detail['id'],
+                    'item_id' => $items['id'],
+                    'item_image' => $items['image'],
+                    'item_price' => $items['price'],
+                    'item_name' => $items['name'],
+                    'order_detail_quantity' => $order_detail['quantity'],
+                    'order_detail_price' => $order_detail['price'],
+                    'order_detail_status' => $order_detail['status']
                 ];
             $order_lists[] = $order_data;
+            // dd($order_data['order_detail_id']);
             $order_detail_ids[] = $order_detail->id;
             }
         }
 
-        $query =  DB::table('order_details')->whereIn('id', $order_detail_ids);
-
-        // SELECT * FROM stores WHERE area_id IN (54,129,302,･･････);
-        $pages = $query->paginate(20);
-        // dd($pages);
         //ページネート追加
-        // $data = $this->paginate($models,2,$request->id,array());
-        // $pages = collect($clients)
-        // $pages = new LengthAwarePaginator($order_lists , $all_pages_num, 20, 1, array('path'=>'/order.index'));
+        //配列をコレクションに変換
+        $orderPaginate = collect($order_lists);
+        //1ページに20件表示
+        $paginate_list = new LengthAwarePaginator(
+            $orderPaginate->forPage($request->page, 20),
+            count($orderPaginate),
+            20,
+            $request->page,
+            ['path' => $request->url()]
+        );
+        return view('order.index', [
+            'order_lists' => $order_lists,
+            'paginate_list' => $paginate_list
+        ]);
 
-        // $page = array_slice($order_lists, 0, 20);
-        // $pages = new Paginator($page, 20, null, array('path'=>'order.index'));
-        return view('order.index', compact('order_lists', 'pages'));
-
-
-        // ↓これって詳細ページでやることやん！
-        // 購入履歴の取得（ログインしているユーザが購入した商品の一覧）
-        // $login_user_id = auth()->user()->id;
-        //ログインしているユーザが購入した商品
-        // $orders = Order::where('user_id', $login_user_id)->get();
-        // dd($orders);
-        // $ordersはuser1が購入した商品の注文IDが4,5,8,9のもの
-        // foreach($orders as $order){
-        //     $order_id = $order->id;
-            // $order_idは注文IDが4のもの
-            // $order_details = OrderDetail::where('order_id', $order_id)->get();
-                // foreach($order_details as $order_detail){
-                //     dd($order_detail);
-                // }
-            // viewに渡すための商品情報をとるためにitemsテーブルを結びつける
-            // $item_id = $order_details[0]->item_id;
-            //     $items = Item::find($item_id);
-            //     dd($items);
-            // foreach($order_details as $order_detail){
-            //     //viewに渡すための商品情報をとるためにitemsテーブルを結びつける
-            //     $item_id = $order_detail->item_id;
-            //     $items = Item::find($item_id);
-            //     dd($items);
-            //     //Viewに渡すもの
-            //     $order_lists = [
-            //     'item_id' => $items['id'], //商品id itemsテーブル
-            //     'item_image' => $items['image'],// 商品画像　itemsテーブル
-            //     'item_name' => $items['name'],// 商品名 itemsテーブル
-            //     'item_price' => $items['price'],// 金額 itemsテーブル
-            //     'order_detail_quantity' => $order_detail['quantity'],// 数量 order_detailsテーブル
-            //     'order_detail_price' => $order_detail['price']// 小計 order_detailsテーブル
-            //     ];
-            // }
-        // }
-        // return view('order.index', compact('orders', 'order_details', 'items'));
-        //
     }
 
     /**
@@ -117,11 +82,63 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($order_detail_id)
     {
-        $order_id = $id;
-        $order_details = OrderDetail::where('order_id',$order_id)->get();
-        return view('order.show',compact('order_details'));
+        //ログインユーザが買った商品の詳細
+        $order_lists = [];
+
+        //その買った商品の詳細(order_detailsの中にあるitem)
+        $order_detail = OrderDetail::find($order_detail_id);
+
+        $item_id = $order_detail->item_id;
+        $items = Item::find($item_id);
+
+        //viewで渡したいもの
+        $order_data = [
+            'order_detail_id' => $order_detail['id'],
+            'order_id' => $order_detail['order_id'],
+            'item_image' => $items['image'],
+            'item_name' => $items['name'],
+            'item_price' => $items['price'],
+            'order_date' => $order_detail['created_at'],
+            'order_detail_price' => $order_detail['price'],
+            'order_status' => $order_detail['status']
+        ];
+        $order_lists [] = $order_data;
+
+        return view('order.show',compact('order_lists'));
+    }
+
+    public function edit ($order_detail_id){
+
+        //viewに渡すデータをまとめる配列
+        $order_lists = [];
+
+        //買った商品の詳細(order_detailsの中にあるitem)
+        $order_detail = OrderDetail::find($order_detail_id);
+        $items = Item::find($order_detail->item_id);
+        //viewで渡したいもの
+        $order_data = [
+            'order_detail_id' => $order_detail['id'],
+            'order_id' => $order_detail['order_id'],
+            'item_image' => $items['image'],
+            'item_name' => $items['name'],
+            'item_price' => $items['price'],
+            'order_date' => $order_detail['created_at'],
+            'order_detail_price' => $order_detail['price'],
+            'order_status' => $order_detail['status']
+        ];
+        $order_lists [] = $order_data;
+        return view('order.edit', compact('order_lists'));
+    }
+
+    public function complete($order_detail_id, Request $request){
+        //statusのデータ取得に必要なorder_detailsテーブル取得
+        $order_detail = OrderDetail::find($order_detail_id);
+        //変更した配送状況のstatusをDBに保存
+        $order_detail->status = $request->status;
+        $order_detail->save();
+        return view ('order.complete', compact('order_detail'));
     }
 
     //注文DBへの保存処理+注文DB詳細への保存＋カートDB削除同時実行
