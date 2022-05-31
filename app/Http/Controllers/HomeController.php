@@ -13,7 +13,7 @@ class HomeController extends Controller
         $categories = ItemCategory::get();
         $search = $request->input('search');
         // クエリビルダ
-        $query = Item::query();
+        $query = Item::query()->where('status', 1);
 
        // もし検索フォームにキーワードが入力されたら
         if ($search) {
@@ -29,7 +29,7 @@ class HomeController extends Controller
             $items = $query->paginate(20);
         }
         else{
-            $items = Item::latest()->paginate(20);
+            $items = $query->latest()->paginate(20);
         }
 
         return view('home.index', compact('items','categories'));

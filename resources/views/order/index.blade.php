@@ -17,6 +17,7 @@
         <p>数量：{{$order_list['order_detail_quantity']}}</p>
         <p>小計：{{$order_list['order_detail_price']}}</p>
         <br>
+      </a>
         ------------------------------------------------------
       @endforeach
       {{ $paginate_list->links('vendor.pagination.default') }}

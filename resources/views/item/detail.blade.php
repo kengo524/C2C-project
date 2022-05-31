@@ -33,7 +33,15 @@
                 <p>商品名:{{$item->name}}</p>
                 <p>説明:{{$item->explanation}}</p>
                 <p>価格:￥{{$item->price}}</p>
-                <p>在庫:{{$item->stock_quantity}}個</p>
+                @if($item->stock_quantity == 0)
+                    <div style="padding-bottom: 5px; color: red">
+                        商品好評につき売り切れ！！
+                    </div>
+                @else
+                    <div style="padding-bottom: 5px">
+                        在庫数:残り{{$item->stock_quantity}}個
+                    </div>
+                @endif
                 <p>送料:￥{{$item->shipping_const}}</p>
                 <p>商品掲載日:{{$item->updated_at}}</p>
                 <form action="{{ route('cart.add') }}" method="post">

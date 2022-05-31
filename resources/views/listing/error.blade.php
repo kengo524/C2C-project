@@ -8,6 +8,6 @@
     </head>
     <body>
       <div>この商品はカートに入っているため、編集出来ません。</div>
-      <a href="{{ route('list', ['id'=>$item_detail->id]) }}">出品履歴へ戻る</a>
+      <a href="{{ route('list', ['id'=>$item_detail->id]) }}">出品商品詳細へ戻る</a>
     </body>
 </html>

@@ -80,6 +80,7 @@ class ListingSoldController extends Controller
                 'item_image' => $item['image'],
                 'item_name' => $item['name'],
                 'item_price' => $item['price'],
+                'quantity' => $order_detail['quantity'],
                 'order_detail_id' => $order_detail['id'],
                 'order_date' => $order_detail['created_at'],//注文日
                 'shipping_name' => $order['shipping_name'],//購入者氏名
@@ -103,6 +104,7 @@ class ListingSoldController extends Controller
             'item_image' => $item['image'],
             'item_name' => $item['name'],
             'item_price' => $item['price'],
+            'quantity' => $order_detail['quantity'],
             'order_detail_id' => $order_detail['id'],
             'order_date' => $order_detail['created_at'],
             'shipping_name' => $order['shipping_name'],
