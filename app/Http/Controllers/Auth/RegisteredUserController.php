@@ -57,10 +57,12 @@ class RegisteredUserController extends Controller
     //ユーザ情報登録で入力されている値を保持
     public function usersstore(Request $request)
     {
-        if(!(strlen($request->phone_number) == 10 or 11)){
+        // dd(strlen($request->phone_number));
+        if(!(strlen($request->phone_number) == 10)||!(strlen($request->phone_number) == 11)){
             Session::flash('flash_message', '電話番号はハイフンなしでのご入力をお願いします。');
             return view('auth.usersregister',compact('request'));
         };
+
         if(!(strlen($request->postal_code) == 7)){
             Session::flash('flash_message', '郵便番号はハイフンなしでの7桁にてご入力をお願いします。');
             return view('auth.usersregister',compact('request'));
