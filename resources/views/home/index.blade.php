@@ -33,6 +33,9 @@
               <form method="GET" action="{{ route('login') }}">
                 <button type="submit">ログイン</button>
               </form>
+              <form method="GET" action="{{ route('register') }}">
+                <button type="submit">新規会員登録はこちら</button>
+              </form>
               @endguest
 
               <form>
