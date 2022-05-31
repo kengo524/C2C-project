@@ -71,8 +71,10 @@ Route::get('/register/shippingaddress/new', [RegisterShippingAddressEditControll
 Route::post('/register/shippingaddress/create', [RegisterShippingAddressEditController::class, 'create'])->middleware(['auth'])->name('register.shippingaddress.create');
 
 //購入系のルート
-Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth'])->name('orders');
-Route::get('/orders/{id}', [OrderController::class, 'show'])->middleware(['auth'])->name('order');
+Route::get('/orders', [OrderController::class, 'index'])->middleware(['auth'])->name('orders.index');
+Route::get('/orders/{order_detail_id}', [OrderController::class, 'show'])->middleware(['auth'])->name('orders.show');
+Route::get('/orders/edit/{order_detail_id}', [OrderController::class, 'edit'])->middleware(['auth'])->name('orders.edit');
+Route::post('/orders/complete/{order_detail_id}', [OrderController::class, 'complete'])->middleware(['auth'])->name('orders.complete');
 Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
 
 //カート処理のルート

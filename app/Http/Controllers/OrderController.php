@@ -42,12 +42,14 @@ class OrderController extends Controller
                 //Viewに渡すもの
                 $order_data = [
                     'order_id' => $order['id'],
-                    'item_id' => $items['id'], //商品id itemsテーブル
-                    'item_image' => $items['image'],// 商品画像　itemsテーブル
-                    'item_name' => $items['name'],// 商品名 itemsテーブル
-                    'item_price' => $items['price'],// 金額 itemsテーブル
-                    'order_detail_quantity' => $order_detail['quantity'],// 数量 order_detailsテーブル
-                    'order_detail_price' => $order_detail['price']// 小計 order_detailsテーブル
+                    'order_detail_id' => $order_detail['id'],
+                    'item_id' => $items['id'],
+                    'item_image' => $items['image'],
+                    'item_price' => $items['price'],
+                    'item_name' => $items['name'],
+                    'order_detail_quantity' => $order_detail['quantity'],
+                    'order_detail_price' => $order_detail['price'],
+                    'order_detail_status' => $order_detail['status']
                 ];
             $order_lists[] = $order_data;
             }
@@ -75,11 +77,63 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($order_detail_id)
     {
-        $order_id = $id;
-        $order_details = OrderDetail::where('order_id',$order_id)->get();
-        return view('order.show',compact('order_details'));
+        //ログインユーザが買った商品の詳細
+        $order_lists = [];
+
+        //その買った商品の詳細(order_detailsの中にあるitem)
+        $order_detail = OrderDetail::find($order_detail_id);
+
+        $item_id = $order_detail->item_id;
+        $items = Item::find($item_id);
+
+        //viewで渡したいもの
+        $order_data = [
+            'order_detail_id' => $order_detail['id'],
+            'order_id' => $order_detail['order_id'],
+            'item_image' => $items['image'],
+            'item_name' => $items['name'],
+            'item_price' => $items['price'],
+            'order_date' => $order_detail['created_at'],
+            'order_detail_price' => $order_detail['price'],
+            'order_status' => $order_detail['status']
+        ];
+        $order_lists [] = $order_data;
+
+        return view('order.show',compact('order_lists'));
+    }
+
+    public function edit ($order_detail_id){
+
+        //viewに渡すデータをまとめる配列
+        $order_lists = [];
+
+        //買った商品の詳細(order_detailsの中にあるitem)
+        $order_detail = OrderDetail::find($order_detail_id);
+        $items = Item::find($order_detail->item_id);
+        //viewで渡したいもの
+        $order_data = [
+            'order_detail_id' => $order_detail['id'],
+            'order_id' => $order_detail['order_id'],
+            'item_image' => $items['image'],
+            'item_name' => $items['name'],
+            'item_price' => $items['price'],
+            'order_date' => $order_detail['created_at'],
+            'order_detail_price' => $order_detail['price'],
+            'order_status' => $order_detail['status']
+        ];
+        $order_lists [] = $order_data;
+        return view('order.edit', compact('order_lists'));
+    }
+
+    public function complete($order_detail_id, Request $request){
+        //statusのデータ取得に必要なorder_detailsテーブル取得
+        $order_detail = OrderDetail::find($order_detail_id);
+        //変更した配送状況のstatusをDBに保存
+        $order_detail->status = $request->status;
+        $order_detail->save();
+        return view ('order.complete', compact('order_detail'));
     }
 
     //注文DBへの保存処理+注文DB詳細への保存＋カートDB削除同時実行
