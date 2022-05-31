@@ -16,7 +16,7 @@ class RegisterBankEditController extends Controller
          $user = User::find($id); //id番号を指定して、データ取得
 
         $login_user_id = auth()->user()->id;
-        $bank_account = BankAccount::find($login_user_id);
+        $bank_account = BankAccount::where('user_id', $login_user_id)->first();
 
         //既に口座番号保有している場合変更、そうでない場合新規登録への条件分岐
         if($bank_account == null){

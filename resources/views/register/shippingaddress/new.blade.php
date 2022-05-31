@@ -36,7 +36,7 @@
         </div>
 
          <div class="text-right">
-            <button type="submit" class="btn btn-primary">変更する</button>
+            <button type="submit" class="btn btn-primary">登録する</button>
           </div>
         </form>
           <div>

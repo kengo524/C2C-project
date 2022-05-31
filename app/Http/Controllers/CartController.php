@@ -114,7 +114,7 @@ class CartController extends Controller
     public function shippinginfo(){
         $user = Auth::user();
         $user_id = Auth::id();
-        $shipping_address = ShippingAddress::find($user_id);
+        $shipping_address = ShippingAddress::where('user_id', $user_id)->first();
         // $shipping_date = date("Y-m-d",strtotime("+6 day"));
 
         //発送情報未登録の場合は、自動的に入力画面で登録するよう設定。
@@ -141,7 +141,7 @@ class CartController extends Controller
         $request = $request->all();
         $login_user = Auth::user();
         $user_id = Auth::id();
-        $shipping_address = ShippingAddress::find($user_id);
+        $shipping_address = ShippingAddress::where('user_id',$user_id)->first();
         // $shipping_date = date("Y-m-d",strtotime("+6 day"));
         $cart_items = Cart::where('user_id', $user_id)->get();
         $items = Item::get();

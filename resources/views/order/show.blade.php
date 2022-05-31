@@ -9,7 +9,7 @@
     <body>
       <div>ここは購入履歴詳細ページ</div>
       @foreach($order_lists as $order_list)
-        <p><img class="logo" src="{{ asset("storage/items/{$order_list['item_image']}/sample1.jpg") }}" width="100" height="100"><br></p>
+        <p><img class="logo" src="{{ asset("storage/items/{$order_list['item_id']}/sample1.jpg") }}" width="100" height="100"><br></p>
         {{-- <p>注文明細ID：{{$order_list['order_detail_id']}}</p>
         <p>注文ID：{{$order_list['order_id']}}</p> --}}
         <p>商品名：{{$order_list['item_name']}}</p>

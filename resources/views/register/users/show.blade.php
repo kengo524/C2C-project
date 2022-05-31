@@ -30,6 +30,7 @@
         </div>
         <div class="form-group">
             <label for="name">電話番号:</label>
+            <p>ハイフンなしで入力してください</p>
             <input type="text" class="form-control" name="phone_number" id="phone_number" value="{{ $user['phone_number'] }}">
         </div>
         <div class="form-group">

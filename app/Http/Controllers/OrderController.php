@@ -92,7 +92,7 @@ class OrderController extends Controller
         $order_data = [
             'order_detail_id' => $order_detail['id'],
             'order_id' => $order_detail['order_id'],
-            'item_image' => $items['image'],
+            'item_id' => $items['id'],
             'item_name' => $items['name'],
             'item_price' => $items['price'],
             'order_date' => $order_detail['created_at'],
@@ -116,7 +116,7 @@ class OrderController extends Controller
         $order_data = [
             'order_detail_id' => $order_detail['id'],
             'order_id' => $order_detail['order_id'],
-            'item_image' => $items['image'],
+            'item_id' => $items['id'],
             'item_name' => $items['name'],
             'item_price' => $items['price'],
             'order_date' => $order_detail['created_at'],
@@ -142,7 +142,7 @@ class OrderController extends Controller
         $user_id = Auth::id();
         $cart_items = Cart::where('user_id', $user_id)->get();
         $items = Item::get();
-        $shipping_address = ShippingAddress::find($user_id);
+        $shipping_address = ShippingAddress::where('user_id',$user_id)->first();
 
         //カート内の各商品が購入確定時に在庫内か判別
         foreach($cart_items as $cart_item){

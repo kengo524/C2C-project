@@ -28,7 +28,7 @@
                                 購入数量:{{$constracted_list['quantity']}}
                             </div>
                             <div style="padding-bottom: 5px">
-                                購入者氏名:{{$constracted_list['shipping_name']}}
+                                送付先氏名:{{$constracted_list['shipping_name']}}
                             </div>
                             <div style="padding-bottom: 5px">
                                 配送先:{{$constracted_list['shipping_address']}}

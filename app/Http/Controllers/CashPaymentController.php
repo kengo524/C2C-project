@@ -28,7 +28,7 @@ class CashPaymentController extends Controller
         $user = Auth::user();
         $user_id = Auth::id();
         $user_payable_amount = $user['payable_amount'];
-        $user_bank_info = BankAccount::find($user_id);
+        $user_bank_info = BankAccount::where('user_id', $user_id)->first();
 
         return view('cashpayment.new', compact(
             'user_id',
@@ -43,7 +43,7 @@ class CashPaymentController extends Controller
         $user = Auth::user();
         $user_id = Auth::id();
         $user_payable_amount = $user['payable_amount'];
-        $user_bank_info = BankAccount::find($user_id);
+        $user_bank_info = BankAccount::where('user_id',$user_id)->first();
         $balance_amount = $user_payable_amount - $request['payment_amount'];
 
         if($request['payment_amount'] > $user_payable_amount){
@@ -67,7 +67,7 @@ class CashPaymentController extends Controller
         $user_id = Auth::id();
         $user1 = User::find(1);
         $user_payable_amount = $user['payable_amount'];
-        $user_bank_info = BankAccount::find($user_id);
+        $user_bank_info = BankAccount::where('user_id',$user_id)->first();
 
         $cashpayment = new CashPayment();
         $cashpayment->user_id = $user_id;

@@ -21,7 +21,7 @@
             <!-- Name -->
             <div>
                 <x-label for="name" :value="__('氏名')" />
-
+                <p>※氏名は一度登録すると変更出来ませんので、ご注意ください。</p>
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 

@@ -16,7 +16,7 @@ class RegisterShippingAddressEditController extends Controller
         $user = User::find($id); //id番号を指定して、データ取得
 
         $login_user_id = auth()->user()->id;
-        $shipping_address = ShippingAddress::find($login_user_id);
+        $shipping_address = ShippingAddress::where('user_id',$login_user_id)->first();
 
         //配送先情報がない場合新規登録画面へ遷移
         if($shipping_address == null){
@@ -32,8 +32,7 @@ class RegisterShippingAddressEditController extends Controller
             // リクエストされた ID でデータを取得(編集対象)
             // $user = User::find($id);
             $login_user_id = auth()->user()->id;
-            $shipping_address = ShippingAddress::find($login_user_id);
-            // dd($shipping_address);
+            $shipping_address = ShippingAddress::where('user_id',$login_user_id)->first();
 
             // 編集対象のデータにデータの入力値を詰めてDBに保存する
             $shipping_address->postal_code = $request->postal_code;
