@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\ShippingAddress;
+use Illuminate\Support\Facades\Auth;
 
 class ListingSoldController extends Controller
 {
@@ -20,6 +21,9 @@ class ListingSoldController extends Controller
         $order_list = [];
         foreach($items as $item){
             $item_id = $item->id;
+            if(!($login_user_id == $item->user_id)){
+                abord(404);
+            }
             // その商品(ログインユーザが出品した商品ID)が含まれるオーダー(order_details)をとる
             $order_details = OrderDetail::where('item_id', $item_id)->get();
 
@@ -73,6 +77,9 @@ class ListingSoldController extends Controller
             // $order_user_id = $order->user_id;
             // $shipping_address_info = ShippingAddress::where('user_id', $order_user_id)->get()[0];
             //ここまで
+            if(!(auth()->user()->id == $item['user_id'])){
+                abord(404);
+            }
 
             //viewに渡したい値
             $constracted_info = [
@@ -93,11 +100,16 @@ class ListingSoldController extends Controller
         return view('listing-sold.show',compact('constracted_lists'));
     }
 
-    public function edit($order_detail_id){
     //成約済み商品変更画面で表示するデータ取得
-    $order_detail = OrderDetail::find($order_detail_id);
-    $item = Item::find($order_detail->item_id);
-    $order = Order::find($order_detail->order_id);
+    public function edit($order_detail_id)
+    {
+        $order_detail = OrderDetail::find($order_detail_id);
+        $item = Item::find($order_detail->item_id);
+        $order = Order::find($order_detail->order_id);
+        $user_id = Auth::id();
+        if(!($user_id == $item->user_id)){
+            abord(404);
+        }
         //購入者の情報取得
         $constracted_list = [
             'item_id' => $item['id'],
@@ -112,7 +124,7 @@ class ListingSoldController extends Controller
             'shipping_phone_number' => $order['phone_number'],
             'order_status' => $order_detail['status']
         ];
-    return view('listing-sold.edit', compact('constracted_list'));
+        return view('listing-sold.edit', compact('constracted_list'));
     }
 
     public function complete($order_detail_id, Request $request){

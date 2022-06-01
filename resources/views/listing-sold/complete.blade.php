@@ -21,7 +21,6 @@
             <div class="panel-heading">お願い</div>
             <div class="panel-body">
               <p>「商品発送中」に変更いたしました。</p>
-              <p>速やかにお客様へのご発送をお願いいたします。</p>
             </div>
             <a href="{{ route('listing-sold.show', ['id'=>$order_detail['item_id']]) }}">成約済み商品詳細へ戻る</a>
           </nav>

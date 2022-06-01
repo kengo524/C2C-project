@@ -80,8 +80,7 @@
               @endforeach
             </div>
           </div>
-
-          {{ $items->links('vendor.pagination.default') }}
+          {{ $items->appends(request()->query())->links('vendor.pagination.default') }}
               <a href="{{ route('homepage') }}">戻る</a>
         </div>
       </div>

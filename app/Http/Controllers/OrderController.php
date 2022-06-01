@@ -152,36 +152,42 @@ class OrderController extends Controller
             }
         }
 
-        //在庫範囲内であれば下記フローを実行
-        //注文DBへの保存
-        $order = new Order();
-        $order->user_id = $user_id;
-        $order->price = $request['total_price'];
-        $order->shipping_name = $shipping_address->name;
-        $order->postal_code = $shipping_address->postal_code;
-        $order->address = $shipping_address->address;
-        $order->phone_number = $shipping_address->phone_number;
-        $order->shipping_date = $request->shipping_date;
-        $order->save();
+        try{
+            DB::beginTransaction();
+            //注文DBへの保存
+            $order = new Order();
+            $order->user_id = $user_id;
+            $order->price = $request['total_price'];
+            $order->shipping_name = $shipping_address->name;
+            $order->postal_code = $shipping_address->postal_code;
+            $order->address = $shipping_address->address;
+            $order->phone_number = $shipping_address->phone_number;
+            $order->shipping_date = $request->shipping_date;
+            $order->save();
 
-        //注文詳細DBの保存+商品在庫の調整+出品user売上計上
-        foreach($cart_items as $cart_item){
-            $orderDetail = New OrderDetail();
-            $orderDetail->order_id = $order->id;
-            $orderDetail->item_id  = $cart_item->item_id;
-            $orderDetail->quantity = $cart_item->quantity;
-            $orderDetail->price = ($items[$cart_item->item_id-1]->price)*($cart_item->quantity);
-            $orderDetail->save();
+            //注文詳細DBの保存+商品在庫の調整+出品user売上計上
+            foreach($cart_items as $cart_item){
+                $orderDetail = New OrderDetail();
+                $orderDetail->order_id = $order->id;
+                $orderDetail->item_id  = $cart_item->item_id;
+                $orderDetail->quantity = $cart_item->quantity;
+                $orderDetail->price = ($items[$cart_item->item_id-1]->price)*($cart_item->quantity);
+                $orderDetail->save();
 
-            Item::find($cart_item->item_id)->update(['stock_quantity' => ($items[$cart_item->item_id-1]->stock_quantity) - ($cart_item->quantity)]);
+                Item::find($cart_item->item_id)->update(['stock_quantity' => ($items[$cart_item->item_id-1]->stock_quantity) - ($cart_item->quantity)]);
 
-            $listing_user = User::where('id', $items[$cart_item->item_id-1]->user_id)->first();
-            $listing_user->payable_amount += ($items[$cart_item->item_id-1]->price)*($cart_item->quantity);
-            $listing_user->update();
+                $listing_user = User::where('id', $items[$cart_item->item_id-1]->user_id)->first();
+                $listing_user->payable_amount += ($items[$cart_item->item_id-1]->price)*($cart_item->quantity);
+                $listing_user->update();
+            }
+
+            //カートDB削除
+            $cart_items->each->delete();
+
+            DB::commit();
+        }catch(Throwable $e) {
+            DB::rollBack();
         }
-
-        //カートDB削除
-        $cart_items->each->delete();
 
         return redirect()->route('cart.complete');
 
