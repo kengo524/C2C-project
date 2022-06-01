@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class RegisterUsersEdit extends FormRequest
 {
@@ -23,22 +25,45 @@ class RegisterUsersEdit extends FormRequest
      */
 
      //入力欄ごとにチェックするルール
-    public function rules()
+    public function rules(Request $request)
     {
-        return [
-            //NickName
-            'nick_name' => 'required|max:20',
-            //Email
-            'email' => 'required|email',
-            //Password
-            'password' => 'required|string|min:8',
-            //PhoneNumber（ハイフンなし）
-            'phone_number' => 'required|string|between:10,11',
-            //PostalCode（ハイフンなし）
-            'postal_code' => 'required|integer|digits:7',
-            //Address
-            'address' => 'required|string',
-        ];
+        if(isset($request->id)){
+            return [
+                //NickName
+                'nick_name' => 'required|max:20',
+                //Email
+                'email' => [
+                            'required',
+                            'email',
+                            Rule::unique('users')->ignore($request->id, 'id'),
+                           ],
+                // 'email' => 'required|email|unique:users,id',
+                //Password
+                'password' => 'required|string|min:8',
+                //PhoneNumber（ハイフンなし）
+                'phone_number' => 'required|string|between:10,11',
+                //PostalCode（ハイフンなし）
+                'postal_code' => 'required|integer|digits:7',
+                //Address
+                'address' => 'required|string',
+            ];
+        }else{
+            return [
+                //NickName
+                'nick_name' => 'required|max:20',
+                //Email
+                'email' => 'required|email|unique:users',
+                //Password
+                'password' => 'required|string|min:8',
+                //PhoneNumber（ハイフンなし）
+                'phone_number' => 'required|string|between:10,11',
+                //PostalCode（ハイフンなし）
+                'postal_code' => 'required|integer|digits:7',
+                //Address
+                'address' => 'required|string',
+            ];
+        }
+
     }
     //日本語に変換
     public function attributes()

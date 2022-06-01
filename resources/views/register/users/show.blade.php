@@ -16,6 +16,7 @@
         <p>氏名：{{ $user['name'] }}</p>
       <form method="POST" action="{{ route('register.users.edited', ['id'=>$user->id]) }}">
         @csrf
+        <input type="hidden" class="form-control" name="id" id="id" value="{{ $user['id'] }}">
         <div class="form-group">
             <label for="name">ニックネーム：</label>
             <input type="text" class="form-control" name="nick_name" id="nick_name" value="{{ $user['nick_name'] }}">
