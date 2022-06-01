@@ -4,6 +4,12 @@
 <nav class="panel panel-default">
     <div class="panel-heading">基本情報を変更する</div>
     <div class="panel-body">
+        @csrf
+        @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+        @endif
         @if ($errors->any())
 	    <div class="alert alert-danger">
 	        <ul>
@@ -16,6 +22,7 @@
         <p>氏名：{{ $user['name'] }}</p>
       <form method="POST" action="{{ route('register.users.edited', ['id'=>$user->id]) }}">
         @csrf
+        <input type="hidden" name="user_id" value="{{ $user->id }}">
         <div class="form-group">
             <label for="name">ニックネーム：</label>
             <input type="text" class="form-control" name="nick_name" id="nick_name" value="{{ $user['nick_name'] }}">

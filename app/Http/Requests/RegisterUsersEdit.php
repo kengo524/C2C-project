@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RegisterUsersEdit extends FormRequest
 {
@@ -23,13 +25,17 @@ class RegisterUsersEdit extends FormRequest
      */
 
      //入力欄ごとにチェックするルール
-    public function rules()
+    public function rules(Request $request)
     {
         return [
             //NickName
             'nick_name' => 'required|max:20',
             //Email
-            'email' => 'required|email',
+            'email'     => [
+                'required',
+                // 重複チェック
+                Rule::unique('users')->ignore($request->id, 'id'),
+            ],
             //Password
             'password' => 'required|string|min:8',
             //PhoneNumber（ハイフンなし）
@@ -62,7 +68,6 @@ class RegisterUsersEdit extends FormRequest
     public function messages()
     {
         return [
-            'email.unique' => 'この:attribute は既に使用しています。',
             'password.min' => ':attribute は８文字以上で設定してください。',
             'phone_number.between' => ':attribute は１０文字以上１１文字以下で設定してください。',
             'postal_code.digits' => '正しい:attributeを入力してください。',

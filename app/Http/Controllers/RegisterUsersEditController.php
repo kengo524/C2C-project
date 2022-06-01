@@ -25,7 +25,14 @@ class RegisterUsersEditController extends Controller
     // リクエストされた ID でタスクデータを取得(編集対象)
     $login_user_id = auth()->user()->id;
     $user = User::find($login_user_id);
-
+    //変更したメアドがdbに登録してあるメアドと同じだったら、バリデーション
+    if($request->email == $user['email']){
+        //エラーのセッション出す
+        $request->session()->flash('message', 'このメールアドレスは既に使用されています');
+        return redirect(route('register.users.edit', [
+            'id' => $login_user_id,
+        ]));
+    }else{
     // 編集対象のタスクデータにデータの入力値を詰めてDBに保存する
     $user->nick_name = $request->nick_name;
     $user->email = $request->email;
@@ -35,7 +42,8 @@ class RegisterUsersEditController extends Controller
     $user->address = $request->address;
     $user->save();
 
-    // ユーザ情報変更確認画面へリダイレクト
+    // ユーザ情報変更完了画面へ
     return view('register.users.edit', compact('user'));
+    }
 }
 }
