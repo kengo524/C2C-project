@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Models\Item;
+use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
@@ -15,19 +16,28 @@ class ListingController extends Controller
         return view('listing.index',compact('items'));
     }
 
+    //出品履歴詳細で表示するデータ取得
     public function show($id)
     {
-        //出品履歴詳細で表示するデータ取得
+        $user_id = Auth::id();
         $item_id = $id;
         $item_detail = Item::find($item_id);
+        if(!($user_id == $item_detail->user_id)){
+            abort(404);
+        }
         return view('listing.show',compact('item_detail'));
     }
 
+    //出品履歴詳細編集画面表示
     public function edit($id)
     {
-        //出品履歴詳細編集画面表示
         $item_id = $id;
         $item_detail = Item::find($item_id);
+        $user_id = Auth::id();
+        //別ユーザーのアクセス制限
+        if(!($user_id == $item_detail->user_id)){
+            abort(404);
+        }
 
         //カートに入ってないときのみ編集できるようにする
         $carts = Cart::where('item_id', $item_id)->count();
